@@ -1,0 +1,4050 @@
+{
+ "run": {
+  "bbox_wgs84": [
+   -99.95,
+   32.0,
+   -99.68,
+   32.225
+  ],
+  "place": "Rolling Plains south of Abilene, Texas",
+  "year": 2020,
+  "resolution_m": 10.0,
+  "seed": 42,
+  "crs": "EPSG:32614",
+  "grid_shape": [
+   2515,
+   2567
+  ],
+  "block_km": 2.0,
+  "test_fraction_of_blocks": 0.2,
+  "buffer_m": 200.0,
+  "n_train_per_class": 2000,
+  "n_test_per_class": 500,
+  "runtime_seconds": 404.2,
+  "data_seconds": 27.1,
+  "peak_memory_gb_main_process": 5.24,
+  "prepare_seconds_per_parallel_part": {
+   "labels": 64.4,
+   "lidar": 223.2,
+   "s2_DJF": 335.3,
+   "s2_MAM": 343.5,
+   "s2_JJA": 347.5,
+   "s2_SON": 342.8,
+   "s1_DJF": 330.8,
+   "s1_MAM": 335.9,
+   "s1_JJA": 311.3,
+   "s1_SON": 311.1
+  }
+ },
+ "inputs": {
+  "sentinel2_months": {
+   "1": {
+    "window": "2020-01-01/2020-01-31",
+    "items": [
+     "S2A_MSIL2A_20200105T171711_R112_T14SMA_20201002T231247",
+     "S2A_MSIL2A_20200118T172641_R012_T14SMA_20201002T201538",
+     "S2B_MSIL2A_20200123T172619_R012_T14SMA_20201002T080729"
+    ],
+    "cloud_cover": [
+     0.0,
+     0.1,
+     0.1
+    ],
+    "share_without_clear_observation": 0.0001
+   },
+   "2": {
+    "window": "2020-02-01/2020-02-29",
+    "items": [
+     "S2A_MSIL2A_20200207T172501_R012_T14SMA_20201001T053917",
+     "S2A_MSIL2A_20200214T171411_R112_T14SMA_20201001T233439",
+     "S2A_MSIL2A_20200224T171301_R112_T14SMA_20200928T031709",
+     "S2A_MSIL2A_20200227T172251_R012_T14SMA_20200928T175326"
+    ],
+    "cloud_cover": [
+     0.8,
+     0.8,
+     1.9,
+     2.8
+    ],
+    "share_without_clear_observation": 0.0001
+   },
+   "12": {
+    "window": "2020-12-01/2020-12-31",
+    "items": [
+     "S2A_MSIL2A_20201210T171711_R112_T14SMA_20201211T065924",
+     "S2A_MSIL2A_20201220T171731_R112_T14SMA_20201221T003537",
+     "S2B_MSIL2A_20201208T172719_R012_T14SMA_20201210T023656",
+     "S2B_MSIL2A_20201225T171729_R112_T14SMA_20201226T124747"
+    ],
+    "cloud_cover": [
+     0.0,
+     0.2,
+     0.4,
+     0.9
+    ],
+    "share_without_clear_observation": 0.0001
+   },
+   "3": {
+    "window": "2020-03-01/2020-03-31",
+    "items": [
+     "S2A_MSIL2A_20200305T171151_R112_T14SMA_20200928T165436",
+     "S2A_MSIL2A_20200325T170931_R112_T14SMA_20201019T112722",
+     "S2B_MSIL2A_20200320T170909_R112_T14SMA_20201013T045231",
+     "S2B_MSIL2A_20200323T171859_R012_T14SMA_20201020T012216"
+    ],
+    "cloud_cover": [
+     0.1,
+     1.1,
+     13.6,
+     25.7
+    ],
+    "share_without_clear_observation": 0.0002
+   },
+   "4": {
+    "window": "2020-04-01/2020-04-30",
+    "items": [
+     "S2A_MSIL2A_20200424T170851_R112_T14SMA_20200921T220240",
+     "S2A_MSIL2A_20200427T171901_R012_T14SMA_20200922T074141",
+     "S2B_MSIL2A_20200412T171849_R012_T14SMA_20200923T064655",
+     "S2B_MSIL2A_20200429T170849_R112_T14SMA_20200922T154609"
+    ],
+    "cloud_cover": [
+     0.0,
+     0.1,
+     0.1,
+     40.3
+    ],
+    "share_without_clear_observation": 0.0002
+   },
+   "5": {
+    "window": "2020-05-01/2020-05-31",
+    "items": [
+     "S2A_MSIL2A_20200504T170901_R112_T14SMA_20200920T112558",
+     "S2A_MSIL2A_20200517T171901_R012_T14SMA_20200909T235514",
+     "S2B_MSIL2A_20200502T171849_R012_T14SMA_20200920T063106",
+     "S2B_MSIL2A_20200519T170849_R112_T14SMA_20200910T064124"
+    ],
+    "cloud_cover": [
+     0.1,
+     0.1,
+     0.2,
+     1.1
+    ],
+    "share_without_clear_observation": 0.0001
+   },
+   "6": {
+    "window": "2020-06-01/2020-06-30",
+    "items": [
+     "S2A_MSIL2A_20200606T171901_R012_T14SMA_20200826T090103",
+     "S2A_MSIL2A_20200613T170901_R112_T14SMA_20200918T185532",
+     "S2B_MSIL2A_20200608T170849_R112_T14SMA_20200826T161409",
+     "S2B_MSIL2A_20200611T171859_R012_T14SMA_20200827T011310"
+    ],
+    "cloud_cover": [
+     0.1,
+     0.3,
+     0.5,
+     0.6
+    ],
+    "share_without_clear_observation": 0.0001
+   },
+   "7": {
+    "window": "2020-07-01/2020-07-31",
+    "items": [
+     "S2A_MSIL2A_20200703T170901_R112_T14SMA_20200825T013658",
+     "S2A_MSIL2A_20200716T171901_R012_T14SMA_20200816T083502",
+     "S2B_MSIL2A_20200708T170849_R112_T14SMA_20200918T185527",
+     "S2B_MSIL2A_20200711T171859_R012_T14SMA_20200912T211646"
+    ],
+    "cloud_cover": [
+     0.1,
+     0.2,
+     0.4,
+     0.5
+    ],
+    "share_without_clear_observation": 0.0001
+   },
+   "8": {
+    "window": "2020-08-01/2020-08-31",
+    "items": [
+     "S2A_MSIL2A_20200812T170901_R112_T14SMA_20200814T203455",
+     "S2B_MSIL2A_20200807T170849_R112_T14SMA_20200815T094322",
+     "S2B_MSIL2A_20200810T171859_R012_T14SMA_20200814T142239",
+     "S2B_MSIL2A_20200830T171859_R012_T14SMA_20200907T165829"
+    ],
+    "cloud_cover": [
+     0.1,
+     0.1,
+     0.5,
+     1.0
+    ],
+    "share_without_clear_observation": 0.0001
+   },
+   "9": {
+    "window": "2020-09-01/2020-09-30",
+    "items": [
+     "S2A_MSIL2A_20200924T172051_R012_T14SMA_20200926T122757",
+     "S2B_MSIL2A_20200919T171919_R012_T14SMA_20200922T195853",
+     "S2B_MSIL2A_20200926T170959_R112_T14SMA_20200927T201335",
+     "S2B_MSIL2A_20200929T172029_R012_T14SMA_20201001T094244"
+    ],
+    "cloud_cover": [
+     0.0,
+     0.1,
+     0.5,
+     13.8
+    ],
+    "share_without_clear_observation": 0.0
+   },
+   "10": {
+    "window": "2020-10-01/2020-10-31",
+    "items": [
+     "S2A_MSIL2A_20201001T171131_R112_T14SMA_20201004T071812",
+     "S2A_MSIL2A_20201011T171241_R112_T14SMA_20201013T210835",
+     "S2B_MSIL2A_20201006T171109_R112_T14SMA_20201010T060954",
+     "S2B_MSIL2A_20201016T171319_R112_T14SMA_20201027T133955"
+    ],
+    "cloud_cover": [
+     0.0,
+     0.0,
+     0.1,
+     0.1
+    ],
+    "share_without_clear_observation": 0.0893
+   },
+   "11": {
+    "window": "2020-11-01/2020-11-30",
+    "items": [
+     "S2A_MSIL2A_20201110T171541_R112_T14SMA_20201111T145939",
+     "S2B_MSIL2A_20201105T171519_R112_T14SMA_20201106T225205",
+     "S2B_MSIL2A_20201115T171559_R112_T14SMA_20201116T214548",
+     "S2B_MSIL2A_20201125T171639_R112_T14SMA_20201126T091637"
+    ],
+    "cloud_cover": [
+     0.0,
+     0.1,
+     0.1,
+     0.3
+    ],
+    "share_without_clear_observation": 0.0819
+   }
+  },
+  "sentinel1": {
+   "orbit_state": "ascending",
+   "relative_orbit": 5,
+   "dates_per_orbit": {
+    "107": 31,
+    "5": 30
+   },
+   "months": {
+    "1": {
+     "dates": [
+      "2020-01-08",
+      "2020-01-20"
+     ],
+     "items": [
+      "S1A_IW_GRDH_1SDV_20200108T004338_20200108T004403_030702_0384F2_rtc",
+      "S1A_IW_GRDH_1SDV_20200108T004403_20200108T004428_030702_0384F2_rtc",
+      "S1A_IW_GRDH_1SDV_20200120T004337_20200120T004402_030877_038B18_rtc",
+      "S1A_IW_GRDH_1SDV_20200120T004402_20200120T004427_030877_038B18_rtc"
+     ],
+     "share_without_data": 0.0
+    },
+    "2": {
+     "dates": [
+      "2020-02-01",
+      "2020-02-13",
+      "2020-02-25"
+     ],
+     "items": [
+      "S1A_IW_GRDH_1SDV_20200201T004337_20200201T004402_031052_039134_rtc",
+      "S1A_IW_GRDH_1SDV_20200201T004402_20200201T004427_031052_039134_rtc",
+      "S1A_IW_GRDH_1SDV_20200213T004337_20200213T004402_031227_03974B_rtc",
+      "S1A_IW_GRDH_1SDV_20200213T004402_20200213T004427_031227_03974B_rtc",
+      "S1A_IW_GRDH_1SDV_20200225T004336_20200225T004401_031402_039D52_rtc",
+      "S1A_IW_GRDH_1SDV_20200225T004401_20200225T004426_031402_039D52_rtc"
+     ],
+     "share_without_data": 0.0
+    },
+    "12": {
+     "dates": [
+      "2020-12-09",
+      "2020-12-21"
+     ],
+     "items": [
+      "S1A_IW_GRDH_1SDV_20201209T004345_20201209T004410_035602_042A00_rtc",
+      "S1A_IW_GRDH_1SDV_20201209T004410_20201209T004435_035602_042A00_rtc",
+      "S1A_IW_GRDH_1SDV_20201221T004345_20201221T004410_035777_043000_rtc",
+      "S1A_IW_GRDH_1SDV_20201221T004410_20201221T004435_035777_043000_rtc"
+     ],
+     "share_without_data": 0.0
+    },
+    "3": {
+     "dates": [
+      "2020-03-08",
+      "2020-03-20"
+     ],
+     "items": [
+      "S1A_IW_GRDH_1SDV_20200308T004337_20200308T004402_031577_03A35B_rtc",
+      "S1A_IW_GRDH_1SDV_20200308T004402_20200308T004427_031577_03A35B_rtc",
+      "S1A_IW_GRDH_1SDV_20200320T004337_20200320T004402_031752_03A97C_rtc",
+      "S1A_IW_GRDH_1SDV_20200320T004402_20200320T004427_031752_03A97C_rtc"
+     ],
+     "share_without_data": 0.0
+    },
+    "4": {
+     "dates": [
+      "2020-04-01",
+      "2020-04-13",
+      "2020-04-25"
+     ],
+     "items": [
+      "S1A_IW_GRDH_1SDV_20200401T004337_20200401T004402_031927_03AFA8_rtc",
+      "S1A_IW_GRDH_1SDV_20200401T004402_20200401T004427_031927_03AFA8_rtc",
+      "S1A_IW_GRDH_1SDV_20200413T004337_20200413T004402_032102_03B5D3_rtc",
+      "S1A_IW_GRDH_1SDV_20200413T004402_20200413T004427_032102_03B5D3_rtc",
+      "S1A_IW_GRDH_1SDV_20200425T004338_20200425T004403_032277_03BBF6_rtc",
+      "S1A_IW_GRDH_1SDV_20200425T004403_20200425T004428_032277_03BBF6_rtc"
+     ],
+     "share_without_data": 0.0
+    },
+    "5": {
+     "dates": [
+      "2020-05-07",
+      "2020-05-19",
+      "2020-05-31"
+     ],
+     "items": [
+      "S1A_IW_GRDH_1SDV_20200507T004338_20200507T004403_032452_03C20D_rtc",
+      "S1A_IW_GRDH_1SDV_20200507T004403_20200507T004428_032452_03C20D_rtc",
+      "S1A_IW_GRDH_1SDV_20200519T004339_20200519T004404_032627_03C760_rtc",
+      "S1A_IW_GRDH_1SDV_20200519T004404_20200519T004429_032627_03C760_rtc",
+      "S1A_IW_GRDH_1SDV_20200531T004340_20200531T004405_032802_03CCAB_rtc",
+      "S1A_IW_GRDH_1SDV_20200531T004405_20200531T004430_032802_03CCAB_rtc"
+     ],
+     "share_without_data": 0.0
+    },
+    "6": {
+     "dates": [
+      "2020-06-12",
+      "2020-06-24"
+     ],
+     "items": [
+      "S1A_IW_GRDH_1SDV_20200612T004341_20200612T004406_032977_03D1D8_rtc",
+      "S1A_IW_GRDH_1SDV_20200612T004406_20200612T004431_032977_03D1D8_rtc",
+      "S1A_IW_GRDH_1SDV_20200624T004341_20200624T004406_033152_03D72D_rtc",
+      "S1A_IW_GRDH_1SDV_20200624T004406_20200624T004431_033152_03D72D_rtc"
+     ],
+     "share_without_data": 0.0
+    },
+    "7": {
+     "dates": [
+      "2020-07-06",
+      "2020-07-18",
+      "2020-07-30"
+     ],
+     "items": [
+      "S1A_IW_GRDH_1SDV_20200706T004342_20200706T004407_033327_03DC76_rtc",
+      "S1A_IW_GRDH_1SDV_20200706T004407_20200706T004432_033327_03DC76_rtc",
+      "S1A_IW_GRDH_1SDV_20200718T004343_20200718T004408_033502_03E1D2_rtc",
+      "S1A_IW_GRDH_1SDV_20200718T004408_20200718T004433_033502_03E1D2_rtc",
+      "S1A_IW_GRDH_1SDV_20200730T004343_20200730T004408_033677_03E72F_rtc",
+      "S1A_IW_GRDH_1SDV_20200730T004408_20200730T004433_033677_03E72F_rtc"
+     ],
+     "share_without_data": 0.0
+    },
+    "8": {
+     "dates": [
+      "2020-08-11",
+      "2020-08-23"
+     ],
+     "items": [
+      "S1A_IW_GRDH_1SDV_20200811T004344_20200811T004409_033852_03ECE7_rtc",
+      "S1A_IW_GRDH_1SDV_20200811T004409_20200811T004434_033852_03ECE7_rtc",
+      "S1A_IW_GRDH_1SDV_20200823T004345_20200823T004410_034027_03F311_rtc",
+      "S1A_IW_GRDH_1SDV_20200823T004410_20200823T004435_034027_03F311_rtc"
+     ],
+     "share_without_data": 0.0
+    },
+    "9": {
+     "dates": [
+      "2020-09-04",
+      "2020-09-16",
+      "2020-09-28"
+     ],
+     "items": [
+      "S1A_IW_GRDH_1SDV_20200904T004345_20200904T004410_034202_03F936_rtc",
+      "S1A_IW_GRDH_1SDV_20200904T004410_20200904T004435_034202_03F936_rtc",
+      "S1A_IW_GRDH_1SDV_20200916T004346_20200916T004411_034377_03FF61_rtc",
+      "S1A_IW_GRDH_1SDV_20200916T004411_20200916T004436_034377_03FF61_rtc",
+      "S1A_IW_GRDH_1SDV_20200928T004346_20200928T004411_034552_040591_rtc",
+      "S1A_IW_GRDH_1SDV_20200928T004411_20200928T004436_034552_040591_rtc"
+     ],
+     "share_without_data": 0.0
+    },
+    "10": {
+     "dates": [
+      "2020-10-10",
+      "2020-10-22"
+     ],
+     "items": [
+      "S1A_IW_GRDH_1SDV_20201010T004346_20201010T004411_034727_040BB0_rtc",
+      "S1A_IW_GRDH_1SDV_20201010T004411_20201010T004436_034727_040BB0_rtc",
+      "S1A_IW_GRDH_1SDV_20201022T004346_20201022T004411_034902_0411C6_rtc",
+      "S1A_IW_GRDH_1SDV_20201022T004411_20201022T004436_034902_0411C6_rtc"
+     ],
+     "share_without_data": 0.0
+    },
+    "11": {
+     "dates": [
+      "2020-11-03",
+      "2020-11-15",
+      "2020-11-27"
+     ],
+     "items": [
+      "S1A_IW_GRDH_1SDV_20201103T004346_20201103T004411_035077_0417CB_rtc",
+      "S1A_IW_GRDH_1SDV_20201103T004411_20201103T004436_035077_0417CB_rtc",
+      "S1A_IW_GRDH_1SDV_20201115T004346_20201115T004411_035252_041DE8_rtc",
+      "S1A_IW_GRDH_1SDV_20201115T004411_20201115T004436_035252_041DE8_rtc",
+      "S1A_IW_GRDH_1SDV_20201127T004346_20201127T004411_035427_0423EF_rtc",
+      "S1A_IW_GRDH_1SDV_20201127T004411_20201127T004436_035427_0423EF_rtc"
+     ],
+     "share_without_data": 0.0
+    }
+   }
+  },
+  "lidar": {
+   "items": 23,
+   "projects": [
+    "USGS_LPC_TX_RedRiver_BrazosBasin_B3_2017_LAS_2019",
+    "USGS_LPC_TX_UpClCrkBrazos_2015_LAS_2016",
+    "USGS_LPC_TX_West_Central_B10_2018_LAS_2019",
+    "USGS_LPC_TX_West_Central_B11_2018_LAS_2019"
+   ],
+   "share_without_lidar": 0.0002,
+   "seconds": 223.2
+  },
+  "gap_filling": {
+   "share_of_pixel_months_filled": {
+    "S2 NDVI": 0.01436,
+    "S2 NDRE": 0.01436,
+    "S2 NDMI": 0.01436,
+    "S1 VV": 0.0,
+    "S1 VH": 0.0,
+    "S1 VHVV": 0.0
+   },
+   "share_of_seasonal_band_values_filled": 9e-06
+  },
+  "share_of_labelled_pixels_with_all_features": 0.9998,
+  "share_of_grid_with_emst_label": 0.9985
+ },
+ "labels": {
+  "source": "TPWD Ecological Mapping Systems of Texas (map service 2020)",
+  "classes": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "class_names": [
+   "Mesquite shrubland",
+   "Grassland",
+   "Juniper / evergreen woody",
+   "Deciduous woody (oak, riparian)",
+   "Cropland",
+   "Other (urban, water, barren)"
+  ],
+  "class_shares": {
+   "Mesquite shrubland": 0.217,
+   "Grassland": 0.2268,
+   "Juniper / evergreen woody": 0.1594,
+   "Deciduous woody (oak, riparian)": 0.1635,
+   "Cropland": 0.2128,
+   "Other (urban, water, barren)": 0.0205
+  },
+  "emst_types": {
+   "n_polygons": 17961,
+   "types": {
+    "9307": {
+     "name": "Row Crops",
+     "class": 5,
+     "share": 0.21247
+    },
+    "9106": {
+     "name": "Native Invasive: Mesquite Shrubland",
+     "class": 1,
+     "share": 0.21114
+    },
+    "307": {
+     "name": "Rolling Plains: Mixedgrass Prairie",
+     "class": 2,
+     "share": 0.16093
+    },
+    "1205": {
+     "name": "Edwards Plateau: Ashe Juniper - Live Oak Shrubland",
+     "class": 3,
+     "share": 0.06345
+    },
+    "1006": {
+     "name": "Edwards Plateau: Floodplain Deciduous Shrubland",
+     "class": 4,
+     "share": 0.05685
+    },
+    "1206": {
+     "name": "Edwards Plateau: Shin Oak Shrubland",
+     "class": 4,
+     "share": 0.05229
+    },
+    "9105": {
+     "name": "Native Invasive: Juniper Shrubland",
+     "class": 3,
+     "share": 0.02999
+    },
+    "407": {
+     "name": "Southwest: Tobosa Grassland",
+     "class": 2,
+     "share": 0.02675
+    },
+    "1007": {
+     "name": "Edwards Plateau: Floodplain Herbaceous Vegetation",
+     "class": 2,
+     "share": 0.01605
+    },
+    "9104": {
+     "name": "Native Invasive: Deciduous Woodland",
+     "class": 4,
+     "share": 0.01364
+    },
+    "1101": {
+     "name": "Edwards Plateau: Ashe Juniper Motte and Woodland",
+     "class": 3,
+     "share": 0.01298
+    },
+    "1103": {
+     "name": "Edwards Plateau: Deciduous Oak / Evergreen Motte and Woodland",
+     "class": 3,
+     "share": 0.012
+    },
+    "1104": {
+     "name": "Edwards Plateau: Oak - Hardwood Motte and Woodland",
+     "class": 4,
+     "share": 0.01161
+    },
+    "9411": {
+     "name": "Urban Low Intensity",
+     "class": 6,
+     "share": 0.00948
+    },
+    "1107": {
+     "name": "Edwards Plateau: Savanna Grassland",
+     "class": 2,
+     "share": 0.00905
+    },
+    "1102": {
+     "name": "Edwards Plateau: Live Oak Motte and Woodland",
+     "class": 3,
+     "share": 0.0078
+    },
+    "2907": {
+     "name": "High Plains: Shortgrass Prairie",
+     "class": 2,
+     "share": 0.00718
+    },
+    "1004": {
+     "name": "Edwards Plateau: Floodplain Hardwood Forest",
+     "class": 4,
+     "share": 0.00714
+    },
+    "9101": {
+     "name": "Native Invasive: Juniper Woodland",
+     "class": 3,
+     "share": 0.00697
+    },
+    "904": {
+     "name": "Edwards Plateau: Oak - Hardwood Slope Forest",
+     "class": 4,
+     "share": 0.00679
+    },
+    "1406": {
+     "name": "Edwards Plateau: Riparian Deciduous Shrubland",
+     "class": 4,
+     "share": 0.00674
+    },
+    "1225": {
+     "name": "Edwards Plateau: Ashe Juniper - Live Oak Slope Shrubland",
+     "class": 3,
+     "share": 0.0052
+    },
+    "9000": {
+     "name": "Barren",
+     "class": 6,
+     "share": 0.00503
+    },
+    "406": {
+     "name": "Southwest: Tobosa / Mesquite Shrubland",
+     "class": 1,
+     "share": 0.00492
+    },
+    "903": {
+     "name": "Edwards Plateau: Oak / Ashe Juniper Slope Forest",
+     "class": 3,
+     "share": 0.00366
+    },
+    "9600": {
+     "name": "Open Water",
+     "class": 6,
+     "share": 0.00347
+    },
+    "507": {
+     "name": "Crosstimbers: Savanna Grassland",
+     "class": 2,
+     "share": 0.0034
+    },
+    "1405": {
+     "name": "Edwards Plateau: Riparian Ashe Juniper Shrubland",
+     "class": 3,
+     "share": 0.00289
+    },
+    "9103": {
+     "name": "Native Invasive: Deciduous - Juniper Woodland",
+     "class": 3,
+     "share": 0.00226
+    },
+    "1005": {
+     "name": "Edwards Plateau: Floodplain Ashe Juniper Shrubland",
+     "class": 3,
+     "share": 0.00224
+    },
+    "9410": {
+     "name": "Urban High Intensity",
+     "class": 6,
+     "share": 0.00221
+    },
+    "1401": {
+     "name": "Edwards Plateau: Riparian Ashe Juniper Forest",
+     "class": 3,
+     "share": 0.0022
+    },
+    "1407": {
+     "name": "Edwards Plateau: Riparian Herbaceous Vegetation",
+     "class": 2,
+     "share": 0.002
+    },
+    "901": {
+     "name": "Edwards Plateau: Ashe Juniper Slope Forest",
+     "class": 3,
+     "share": 0.00195
+    },
+    "504": {
+     "name": "Crosstimbers: Post Oak Woodland",
+     "class": 4,
+     "share": 0.00171
+    },
+    "1002": {
+     "name": "Edwards Plateau: Floodplain Live Oak Forest",
+     "class": 3,
+     "share": 0.0017
+    },
+    "524": {
+     "name": "Crosstimbers: Oak / Hardwood Slope Forest",
+     "class": 4,
+     "share": 0.00157
+    },
+    "2106": {
+     "name": "Rolling Plains: Breaks Deciduous Shrubland",
+     "class": 4,
+     "share": 0.00105
+    },
+    "1404": {
+     "name": "Edwards Plateau: Riparian Hardwood Forest",
+     "class": 4,
+     "share": 0.00087
+    },
+    "1403": {
+     "name": "Edwards Plateau: Riparian Hardwood / Ashe Juniper Forest",
+     "class": 3,
+     "share": 0.00085
+    },
+    "2704": {
+     "name": "High Plains: Riparian Hardwood Forest",
+     "class": 4,
+     "share": 0.00085
+    },
+    "523": {
+     "name": "Crosstimbers: Hardwood / Juniper Slope Forest",
+     "class": 3,
+     "share": 0.00085
+    },
+    "2805": {
+     "name": "High Plains: Sandy Deciduous Shrubland",
+     "class": 4,
+     "share": 0.00083
+    },
+    "1226": {
+     "name": "Edwards Plateau: Shin Oak Slope Shrubland",
+     "class": 4,
+     "share": 0.00079
+    },
+    "1003": {
+     "name": "Edwards Plateau: Floodplain Hardwood / Ashe Juniper Forest",
+     "class": 3,
+     "share": 0.00075
+    },
+    "521": {
+     "name": "Crosstimbers: Juniper Slope Forest",
+     "class": 3,
+     "share": 0.00067
+    },
+    "5406": {
+     "name": "High Plains: Mesquite Shrubland",
+     "class": 1,
+     "share": 0.00058
+    },
+    "317": {
+     "name": "Rolling Plains: Mixedgrass Sandy Prairie",
+     "class": 2,
+     "share": 0.00048
+    },
+    "1001": {
+     "name": "Edwards Plateau: Floodplain Ashe Juniper Forest",
+     "class": 3,
+     "share": 0.0004
+    },
+    "2707": {
+     "name": "High Plains: Riparian Herbaceous Vegetation",
+     "class": 2,
+     "share": 0.00038
+    },
+    "2804": {
+     "name": "High Plains: Deep Sand Woodland",
+     "class": 4,
+     "share": 0.00021
+    },
+    "9007": {
+     "name": "Marsh",
+     "class": 6,
+     "share": 0.00019
+    },
+    "902": {
+     "name": "Edwards Plateau: Live Oak Slope Forest",
+     "class": 3,
+     "share": 0.00018
+    },
+    "2806": {
+     "name": "High Plains: Sandy Shinnery Shrubland",
+     "class": 4,
+     "share": 0.00013
+    },
+    "1402": {
+     "name": "Edwards Plateau: Riparian Live Oak Forest",
+     "class": 3,
+     "share": 0.00011
+    },
+    "1000": {
+     "name": "Edwards Plateau: Floodplain Barrens",
+     "class": 6,
+     "share": 9e-05
+    },
+    "2116": {
+     "name": "Rolling Plains: Gyp Breaks Deciduous Shrubland",
+     "class": 4,
+     "share": 9e-05
+    },
+    "1400": {
+     "name": "Edwards Plateau: Riparian Barrens",
+     "class": 6,
+     "share": 8e-05
+    },
+    "9327": {
+     "name": "CRP / Other Improved Grassland",
+     "class": 2,
+     "share": 8e-05
+    },
+    "1114": {
+     "name": "Edwards Plateau: Post Oak Motte and Woodland",
+     "class": 4,
+     "share": 5e-05
+    },
+    "2706": {
+     "name": "High Plains: Riparian Deciduous Shrubland",
+     "class": 4,
+     "share": 5e-05
+    },
+    "207": {
+     "name": "Blackland Prairie: Disturbance or Tame Grassland",
+     "class": 2,
+     "share": 5e-05
+    },
+    "9114": {
+     "name": "Native Invasive: Mesquite Woodland",
+     "class": 1,
+     "share": 4e-05
+    },
+    "2105": {
+     "name": "Rolling Plains: Breaks Evergreen Shrubland",
+     "class": 3,
+     "share": 3e-05
+    },
+    "9317": {
+     "name": "Grass Farm",
+     "class": 2,
+     "share": 3e-05
+    },
+    "1017": {
+     "name": "Edwards Plateau: Floodplain Herbaceous Wetland",
+     "class": 2,
+     "share": 2e-05
+    },
+    "9004": {
+     "name": "Swamp",
+     "class": 6,
+     "share": 1e-05
+    },
+    "503": {
+     "name": "Crosstimbers: Post Oak / Juniper Woodland",
+     "class": 3,
+     "share": 1e-05
+    },
+    "1417": {
+     "name": "Edwards Plateau: Riparian Herbaceous Wetland",
+     "class": 2,
+     "share": 0.0
+    },
+    "3808": {
+     "name": "High Plains: Depressional Marsh",
+     "class": 6,
+     "share": 0.0
+    }
+   }
+  },
+  "gap_types": {
+   "items": [
+    "gap_landfire_nationalterrestrialecosystems2011_-561135_1162215_-261135_862215"
+   ],
+   "types": {
+    "330": {
+     "name": "Western Great Plains Mesquite Woodland and Shrubland",
+     "class": 1,
+     "share": 0.39324
+    },
+    "556": {
+     "name": "Cultivated Cropland",
+     "class": 5,
+     "share": 0.22799
+    },
+    "59": {
+     "name": "Edwards Plateau Limestone Shrubland",
+     "class": 4,
+     "share": 0.17255
+    },
+    "51": {
+     "name": "Edwards Plateau Limestone Savanna and Woodland",
+     "class": 4,
+     "share": 0.07351
+    },
+    "560": {
+     "name": "Modified/Managed Southern Tall Grassland",
+     "class": 2,
+     "share": 0.04867
+    },
+    "324": {
+     "name": "Central Mixedgrass Prairie",
+     "class": 2,
+     "share": 0.02574
+    },
+    "50": {
+     "name": "Edwards Plateau Dry-Mesic Slope Forest and Woodland",
+     "class": 4,
+     "share": 0.01235
+    },
+    "581": {
+     "name": "Developed, Open Space",
+     "class": 6,
+     "share": 0.00952
+    },
+    "584": {
+     "name": "Developed, High Intensity",
+     "class": 6,
+     "share": 0.00907
+    },
+    "557": {
+     "name": "Pasture/Hay",
+     "class": 2,
+     "share": 0.00447
+    },
+    "329": {
+     "name": "Western Great Plains Sandhill Steppe",
+     "class": 2,
+     "share": 0.00397
+    },
+    "331": {
+     "name": "Western Great Plains Shortgrass Prairie",
+     "class": 2,
+     "share": 0.00391
+    },
+    "193": {
+     "name": "Western Great Plains Floodplain Systems",
+     "class": 4,
+     "share": 0.00353
+    },
+    "579": {
+     "name": "Open Water (Fresh)",
+     "class": 6,
+     "share": 0.00345
+    },
+    "91": {
+     "name": "Ruderal forest",
+     "class": 4,
+     "share": 0.00169
+    },
+    "442": {
+     "name": "Chihuahuan-Sonoran Desert Bottomland and Swale Grassland",
+     "class": 2,
+     "share": 0.00146
+    },
+    "582": {
+     "name": "Developed, Low Intensity",
+     "class": 6,
+     "share": 0.00138
+    },
+    "465": {
+     "name": "Chihuahuan Mixed Desert and Thorn Scrub",
+     "class": 0,
+     "share": 0.00098
+    },
+    "328": {
+     "name": "Western Great Plains Sand Prairie",
+     "class": 2,
+     "share": 0.0008
+    },
+    "567": {
+     "name": "Harvested Forest - Grass/Forb Regeneration",
+     "class": 4,
+     "share": 0.00043
+    },
+    "571": {
+     "name": "Recently burned grassland",
+     "class": 2,
+     "share": 0.0003
+    },
+    "53": {
+     "name": "Llano Uplift Acidic Forest, Woodland and Glade",
+     "class": 4,
+     "share": 0.00027
+    },
+    "580": {
+     "name": "Quarries, Mines, Gravel Pits and Oil Wells",
+     "class": 6,
+     "share": 0.00023
+    },
+    "253": {
+     "name": "Edwards Plateau Riparian",
+     "class": 4,
+     "share": 0.00023
+    },
+    "583": {
+     "name": "Developed, Medium Intensity",
+     "class": 6,
+     "share": 0.00014
+    },
+    "52": {
+     "name": "Edwards Plateau Mesic Canyon",
+     "class": 0,
+     "share": 4e-05
+    },
+    "426": {
+     "name": "Western Great Plains Depressional Wetland Systems",
+     "class": 0,
+     "share": 4e-05
+    },
+    "327": {
+     "name": "Western Great Plains Tallgrass Prairie",
+     "class": 2,
+     "share": 1e-05
+    },
+    "565": {
+     "name": "Disturbed, Non-specific",
+     "class": 0,
+     "share": 1e-05
+    },
+    "65": {
+     "name": "Crosstimbers Oak Forest and Woodland",
+     "class": 4,
+     "share": 1e-05
+    },
+    "555": {
+     "name": "Orchards Vineyards and Other High Structure Agriculture",
+     "class": 0,
+     "share": 0.0
+    }
+   }
+  }
+ },
+ "samples": {
+  "train": 12000,
+  "train_blocks": 135,
+  "test_blocks": 34,
+  "test_population_pixels": 1324916
+ },
+ "cross_validation": {
+  "random_forest|S2 only": {
+   "random_cv": {
+    "overall_accuracy": 0.5983,
+    "overall_accuracy_sd": 0.0087,
+    "balanced_accuracy": 0.5985,
+    "balanced_accuracy_sd": 0.0098,
+    "macro_f1": 0.5938
+   },
+   "spatial_cv": {
+    "overall_accuracy": 0.5659,
+    "overall_accuracy_sd": 0.0278,
+    "balanced_accuracy": 0.5637,
+    "balanced_accuracy_sd": 0.0274,
+    "macro_f1": 0.5573
+   },
+   "test": {
+    "overall_accuracy": 0.5678,
+    "kappa": 0.471,
+    "macro_f1": 0.5431,
+    "balanced_accuracy": 0.5938
+   }
+  },
+  "hist_gradient_boosting|S2 only": {
+   "test": {
+    "overall_accuracy": 0.5554,
+    "kappa": 0.4549,
+    "macro_f1": 0.5358,
+    "balanced_accuracy": 0.5792
+   }
+  },
+  "random_forest|S1 only": {
+   "random_cv": {
+    "overall_accuracy": 0.4421,
+    "overall_accuracy_sd": 0.0116,
+    "balanced_accuracy": 0.4423,
+    "balanced_accuracy_sd": 0.0106,
+    "macro_f1": 0.4278
+   },
+   "spatial_cv": {
+    "overall_accuracy": 0.4317,
+    "overall_accuracy_sd": 0.0243,
+    "balanced_accuracy": 0.4327,
+    "balanced_accuracy_sd": 0.0188,
+    "macro_f1": 0.4137
+   },
+   "test": {
+    "overall_accuracy": 0.4652,
+    "kappa": 0.344,
+    "macro_f1": 0.4234,
+    "balanced_accuracy": 0.4512
+   }
+  },
+  "hist_gradient_boosting|S1 only": {
+   "test": {
+    "overall_accuracy": 0.4319,
+    "kappa": 0.3091,
+    "macro_f1": 0.4002,
+    "balanced_accuracy": 0.4234
+   }
+  },
+  "random_forest|S1 + S2": {
+   "random_cv": {
+    "overall_accuracy": 0.5929,
+    "overall_accuracy_sd": 0.0102,
+    "balanced_accuracy": 0.5933,
+    "balanced_accuracy_sd": 0.0095,
+    "macro_f1": 0.5884
+   },
+   "spatial_cv": {
+    "overall_accuracy": 0.5674,
+    "overall_accuracy_sd": 0.0284,
+    "balanced_accuracy": 0.5653,
+    "balanced_accuracy_sd": 0.0271,
+    "macro_f1": 0.5583
+   },
+   "test": {
+    "overall_accuracy": 0.5748,
+    "kappa": 0.4799,
+    "macro_f1": 0.5491,
+    "balanced_accuracy": 0.6002
+   }
+  },
+  "hist_gradient_boosting|S1 + S2": {
+   "random_cv": {
+    "overall_accuracy": 0.5839,
+    "overall_accuracy_sd": 0.0067,
+    "balanced_accuracy": 0.5841,
+    "balanced_accuracy_sd": 0.0066,
+    "macro_f1": 0.5819
+   },
+   "spatial_cv": {
+    "overall_accuracy": 0.5546,
+    "overall_accuracy_sd": 0.026,
+    "balanced_accuracy": 0.5522,
+    "balanced_accuracy_sd": 0.0252,
+    "macro_f1": 0.5493
+   },
+   "test": {
+    "overall_accuracy": 0.5624,
+    "kappa": 0.4637,
+    "macro_f1": 0.5416,
+    "balanced_accuracy": 0.5864
+   }
+  },
+  "random_forest|S1 + S2 + lidar": {
+   "random_cv": {
+    "overall_accuracy": 0.5936,
+    "overall_accuracy_sd": 0.005,
+    "balanced_accuracy": 0.5938,
+    "balanced_accuracy_sd": 0.0072,
+    "macro_f1": 0.5893
+   },
+   "spatial_cv": {
+    "overall_accuracy": 0.5704,
+    "overall_accuracy_sd": 0.0327,
+    "balanced_accuracy": 0.5683,
+    "balanced_accuracy_sd": 0.031,
+    "macro_f1": 0.5625
+   },
+   "test": {
+    "overall_accuracy": 0.5755,
+    "kappa": 0.481,
+    "macro_f1": 0.5502,
+    "balanced_accuracy": 0.6019
+   }
+  },
+  "hist_gradient_boosting|S1 + S2 + lidar": {
+   "test": {
+    "overall_accuracy": 0.5658,
+    "kappa": 0.468,
+    "macro_f1": 0.545,
+    "balanced_accuracy": 0.5912
+   }
+  },
+  "random_forest|lidar only": {
+   "random_cv": {
+    "overall_accuracy": 0.3228,
+    "overall_accuracy_sd": 0.0043,
+    "balanced_accuracy": 0.3228,
+    "balanced_accuracy_sd": 0.0052,
+    "macro_f1": 0.287
+   },
+   "spatial_cv": {
+    "overall_accuracy": 0.3199,
+    "overall_accuracy_sd": 0.0171,
+    "balanced_accuracy": 0.3209,
+    "balanced_accuracy_sd": 0.0132,
+    "macro_f1": 0.2839
+   },
+   "test": {
+    "overall_accuracy": 0.3485,
+    "kappa": 0.2116,
+    "macro_f1": 0.297,
+    "balanced_accuracy": 0.3386
+   }
+  },
+  "hist_gradient_boosting|lidar only": {
+   "test": {
+    "overall_accuracy": 0.3649,
+    "kappa": 0.2306,
+    "macro_f1": 0.3079,
+    "balanced_accuracy": 0.3535
+   }
+  }
+ },
+ "clustered_design_rf_main": {
+  "random_cv": {
+   "overall_accuracy": 0.9538,
+   "overall_accuracy_sd": 0.0031,
+   "balanced_accuracy": 0.9538,
+   "balanced_accuracy_sd": 0.0033,
+   "macro_f1": 0.9537
+  },
+  "spatial_cv": {
+   "overall_accuracy": 0.5513,
+   "overall_accuracy_sd": 0.0812,
+   "balanced_accuracy": 0.5543,
+   "balanced_accuracy_sd": 0.0626,
+   "macro_f1": 0.5459
+  },
+  "test": {
+   "overall_accuracy": 0.5241,
+   "kappa": 0.419,
+   "macro_f1": 0.5058,
+   "balanced_accuracy": 0.5571
+  },
+  "n_pixels": 12084,
+  "n_patches": 572
+ },
+ "fit_seconds": {
+  "random_forest|S2 only": 10.9,
+  "hist_gradient_boosting|S2 only": 1.9,
+  "random_forest|S1 only": 17.3,
+  "hist_gradient_boosting|S1 only": 5.5,
+  "random_forest|S1 + S2": 37.4,
+  "hist_gradient_boosting|S1 + S2": 102.3,
+  "random_forest|S1 + S2 + lidar": 24.5,
+  "hist_gradient_boosting|S1 + S2 + lidar": 3.9,
+  "random_forest|lidar only": 6.7,
+  "hist_gradient_boosting|lidar only": 0.8
+ },
+ "test": {
+  "random_forest|S2 only": {
+   "census_of_test_blocks": {
+    "overall_accuracy": 0.5678,
+    "balanced_accuracy": 0.5938,
+    "macro_f1": 0.5431,
+    "kappa": 0.471,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.4353,
+      "producers_accuracy": 0.3523
+     },
+     "Grassland": {
+      "users_accuracy": 0.5131,
+      "producers_accuracy": 0.5298
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.7752,
+      "producers_accuracy": 0.8057
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.514,
+      "producers_accuracy": 0.4402
+     },
+     "Cropland": {
+      "users_accuracy": 0.7432,
+      "producers_accuracy": 0.7606
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.2202,
+      "producers_accuracy": 0.6741
+     }
+    }
+   },
+   "olofsson_2014": {
+    "sample_size": 3000,
+    "sample_counts_rows_map_cols_reference": [
+     [
+      220,
+      106,
+      15,
+      136,
+      20,
+      3
+     ],
+     [
+      113,
+      261,
+      9,
+      58,
+      52,
+      7
+     ],
+     [
+      65,
+      14,
+      361,
+      59,
+      0,
+      1
+     ],
+     [
+      142,
+      50,
+      22,
+      269,
+      10,
+      7
+     ],
+     [
+      21,
+      95,
+      6,
+      3,
+      373,
+      2
+     ],
+     [
+      104,
+      83,
+      71,
+      95,
+      44,
+      103
+     ]
+    ],
+    "overall_accuracy": 0.5644,
+    "overall_accuracy_ci95": 0.0176,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.44,
+      "users_accuracy_ci95": 0.0436,
+      "producers_accuracy": 0.3543,
+      "producers_accuracy_ci95": 0.0301,
+      "mapped_area_km2": 23.46,
+      "estimated_area_km2": 29.13,
+      "estimated_area_ci95_km2": 1.92,
+      "emst_census_area_km2": 28.99,
+      "ci_covers_census": true
+     },
+     "Grassland": {
+      "users_accuracy": 0.522,
+      "users_accuracy_ci95": 0.0438,
+      "producers_accuracy": 0.5186,
+      "producers_accuracy_ci95": 0.0325,
+      "mapped_area_km2": 29.21,
+      "estimated_area_km2": 29.4,
+      "estimated_area_ci95_km2": 1.9,
+      "emst_census_area_km2": 28.29,
+      "ci_covers_census": true
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.722,
+      "users_accuracy_ci95": 0.0393,
+      "producers_accuracy": 0.8155,
+      "producers_accuracy_ci95": 0.0296,
+      "mapped_area_km2": 23.7,
+      "estimated_area_km2": 20.98,
+      "estimated_area_ci95_km2": 1.18,
+      "emst_census_area_km2": 22.81,
+      "ci_covers_census": false
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.538,
+      "users_accuracy_ci95": 0.0437,
+      "producers_accuracy": 0.4382,
+      "producers_accuracy_ci95": 0.0316,
+      "mapped_area_km2": 21.17,
+      "estimated_area_km2": 25.99,
+      "estimated_area_ci95_km2": 1.72,
+      "emst_census_area_km2": 24.72,
+      "ci_covers_census": true
+     },
+     "Cropland": {
+      "users_accuracy": 0.746,
+      "users_accuracy_ci95": 0.0382,
+      "producers_accuracy": 0.7797,
+      "producers_accuracy_ci95": 0.0322,
+      "mapped_area_km2": 25.02,
+      "estimated_area_km2": 23.94,
+      "estimated_area_ci95_km2": 1.35,
+      "emst_census_area_km2": 24.44,
+      "ci_covers_census": true
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.206,
+      "users_accuracy_ci95": 0.0355,
+      "producers_accuracy": 0.6732,
+      "producers_accuracy_ci95": 0.104,
+      "mapped_area_km2": 9.93,
+      "estimated_area_km2": 3.04,
+      "estimated_area_ci95_km2": 0.56,
+      "emst_census_area_km2": 3.25,
+      "ci_covers_census": true
+     }
+    }
+   }
+  },
+  "hist_gradient_boosting|S2 only": {
+   "census_of_test_blocks": {
+    "overall_accuracy": 0.5554,
+    "balanced_accuracy": 0.5792,
+    "macro_f1": 0.5358,
+    "kappa": 0.4549,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.4184,
+      "producers_accuracy": 0.3731
+     },
+     "Grassland": {
+      "users_accuracy": 0.4944,
+      "producers_accuracy": 0.4899
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.7822,
+      "producers_accuracy": 0.7932
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.4865,
+      "producers_accuracy": 0.4466
+     },
+     "Cropland": {
+      "users_accuracy": 0.7488,
+      "producers_accuracy": 0.7232
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.2293,
+      "producers_accuracy": 0.649
+     }
+    }
+   },
+   "olofsson_2014": {
+    "sample_size": 3000,
+    "sample_counts_rows_map_cols_reference": [
+     [
+      219,
+      98,
+      19,
+      131,
+      24,
+      9
+     ],
+     [
+      108,
+      244,
+      14,
+      56,
+      76,
+      2
+     ],
+     [
+      44,
+      11,
+      396,
+      48,
+      0,
+      1
+     ],
+     [
+      155,
+      47,
+      46,
+      236,
+      5,
+      11
+     ],
+     [
+      14,
+      93,
+      9,
+      10,
+      372,
+      2
+     ],
+     [
+      102,
+      84,
+      52,
+      110,
+      41,
+      111
+     ]
+    ],
+    "overall_accuracy": 0.5557,
+    "overall_accuracy_ci95": 0.0175,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.438,
+      "users_accuracy_ci95": 0.0435,
+      "producers_accuracy": 0.3907,
+      "producers_accuracy_ci95": 0.0316,
+      "mapped_area_km2": 25.85,
+      "estimated_area_km2": 28.98,
+      "estimated_area_ci95_km2": 1.92,
+      "emst_census_area_km2": 28.99,
+      "ci_covers_census": true
+     },
+     "Grassland": {
+      "users_accuracy": 0.488,
+      "users_accuracy_ci95": 0.0439,
+      "producers_accuracy": 0.5006,
+      "producers_accuracy_ci95": 0.0342,
+      "mapped_area_km2": 28.03,
+      "estimated_area_km2": 27.32,
+      "estimated_area_ci95_km2": 1.87,
+      "emst_census_area_km2": 28.29,
+      "ci_covers_census": true
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.792,
+      "users_accuracy_ci95": 0.0356,
+      "producers_accuracy": 0.7777,
+      "producers_accuracy_ci95": 0.0309,
+      "mapped_area_km2": 23.13,
+      "estimated_area_km2": 23.55,
+      "estimated_area_ci95_km2": 1.22,
+      "emst_census_area_km2": 22.81,
+      "ci_covers_census": true
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.472,
+      "users_accuracy_ci95": 0.0438,
+      "producers_accuracy": 0.4227,
+      "producers_accuracy_ci95": 0.0333,
+      "mapped_area_km2": 22.69,
+      "estimated_area_km2": 25.33,
+      "estimated_area_ci95_km2": 1.77,
+      "emst_census_area_km2": 24.72,
+      "ci_covers_census": true
+     },
+     "Cropland": {
+      "users_accuracy": 0.744,
+      "users_accuracy_ci95": 0.0383,
+      "producers_accuracy": 0.7305,
+      "producers_accuracy_ci95": 0.0335,
+      "mapped_area_km2": 23.61,
+      "estimated_area_km2": 24.05,
+      "estimated_area_ci95_km2": 1.39,
+      "emst_census_area_km2": 24.44,
+      "ci_covers_census": true
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.222,
+      "users_accuracy_ci95": 0.0365,
+      "producers_accuracy": 0.6262,
+      "producers_accuracy_ci95": 0.0991,
+      "mapped_area_km2": 9.19,
+      "estimated_area_km2": 3.26,
+      "estimated_area_ci95_km2": 0.58,
+      "emst_census_area_km2": 3.25,
+      "ci_covers_census": true
+     }
+    }
+   }
+  },
+  "random_forest|S1 only": {
+   "census_of_test_blocks": {
+    "overall_accuracy": 0.4652,
+    "balanced_accuracy": 0.4512,
+    "macro_f1": 0.4234,
+    "kappa": 0.344,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.3709,
+      "producers_accuracy": 0.3499
+     },
+     "Grassland": {
+      "users_accuracy": 0.4813,
+      "producers_accuracy": 0.3939
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.5542,
+      "producers_accuracy": 0.7073
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.3633,
+      "producers_accuracy": 0.2493
+     },
+     "Cropland": {
+      "users_accuracy": 0.6073,
+      "producers_accuracy": 0.6974
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.1277,
+      "producers_accuracy": 0.3091
+     }
+    }
+   },
+   "olofsson_2014": {
+    "sample_size": 3000,
+    "sample_counts_rows_map_cols_reference": [
+     [
+      179,
+      95,
+      41,
+      140,
+      37,
+      8
+     ],
+     [
+      108,
+      243,
+      10,
+      43,
+      90,
+      6
+     ],
+     [
+      60,
+      18,
+      280,
+      132,
+      5,
+      5
+     ],
+     [
+      158,
+      47,
+      81,
+      190,
+      16,
+      8
+     ],
+     [
+      44,
+      127,
+      8,
+      27,
+      288,
+      6
+     ],
+     [
+      130,
+      100,
+      48,
+      111,
+      44,
+      67
+     ]
+    ],
+    "overall_accuracy": 0.4605,
+    "overall_accuracy_ci95": 0.0185,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.358,
+      "users_accuracy_ci95": 0.0421,
+      "producers_accuracy": 0.3477,
+      "producers_accuracy_ci95": 0.0329,
+      "mapped_area_km2": 27.35,
+      "estimated_area_km2": 28.16,
+      "estimated_area_ci95_km2": 1.94,
+      "emst_census_area_km2": 28.99,
+      "ci_covers_census": true
+     },
+     "Grassland": {
+      "users_accuracy": 0.486,
+      "users_accuracy_ci95": 0.0439,
+      "producers_accuracy": 0.4049,
+      "producers_accuracy_ci95": 0.0318,
+      "mapped_area_km2": 23.15,
+      "estimated_area_km2": 27.79,
+      "estimated_area_ci95_km2": 1.89,
+      "emst_census_area_km2": 28.29,
+      "ci_covers_census": true
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.56,
+      "users_accuracy_ci95": 0.0436,
+      "producers_accuracy": 0.71,
+      "producers_accuracy_ci95": 0.0342,
+      "mapped_area_km2": 29.1,
+      "estimated_area_km2": 22.96,
+      "estimated_area_ci95_km2": 1.6,
+      "emst_census_area_km2": 22.81,
+      "ci_covers_census": true
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.38,
+      "users_accuracy_ci95": 0.0426,
+      "producers_accuracy": 0.2384,
+      "producers_accuracy_ci95": 0.0257,
+      "mapped_area_km2": 16.96,
+      "estimated_area_km2": 27.04,
+      "estimated_area_ci95_km2": 1.91,
+      "emst_census_area_km2": 24.72,
+      "ci_covers_census": false
+     },
+     "Cropland": {
+      "users_accuracy": 0.576,
+      "users_accuracy_ci95": 0.0434,
+      "producers_accuracy": 0.6769,
+      "producers_accuracy_ci95": 0.0349,
+      "mapped_area_km2": 28.07,
+      "estimated_area_km2": 23.88,
+      "estimated_area_ci95_km2": 1.63,
+      "emst_census_area_km2": 24.44,
+      "ci_covers_census": true
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.134,
+      "users_accuracy_ci95": 0.0299,
+      "producers_accuracy": 0.3947,
+      "producers_accuracy_ci95": 0.0982,
+      "mapped_area_km2": 7.86,
+      "estimated_area_km2": 2.67,
+      "estimated_area_ci95_km2": 0.61,
+      "emst_census_area_km2": 3.25,
+      "ci_covers_census": true
+     }
+    }
+   }
+  },
+  "hist_gradient_boosting|S1 only": {
+   "census_of_test_blocks": {
+    "overall_accuracy": 0.4319,
+    "balanced_accuracy": 0.4234,
+    "macro_f1": 0.4002,
+    "kappa": 0.3091,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.3481,
+      "producers_accuracy": 0.3126
+     },
+     "Grassland": {
+      "users_accuracy": 0.4509,
+      "producers_accuracy": 0.3604
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.5621,
+      "producers_accuracy": 0.6214
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.3338,
+      "producers_accuracy": 0.2875
+     },
+     "Cropland": {
+      "users_accuracy": 0.658,
+      "producers_accuracy": 0.6406
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.0762,
+      "producers_accuracy": 0.3181
+     }
+    }
+   },
+   "olofsson_2014": {
+    "sample_size": 3000,
+    "sample_counts_rows_map_cols_reference": [
+     [
+      172,
+      124,
+      52,
+      113,
+      29,
+      10
+     ],
+     [
+      108,
+      215,
+      16,
+      49,
+      104,
+      8
+     ],
+     [
+      77,
+      16,
+      275,
+      119,
+      6,
+      7
+     ],
+     [
+      150,
+      60,
+      105,
+      144,
+      24,
+      17
+     ],
+     [
+      23,
+      106,
+      3,
+      21,
+      341,
+      6
+     ],
+     [
+      124,
+      118,
+      54,
+      121,
+      45,
+      38
+     ]
+    ],
+    "overall_accuracy": 0.4222,
+    "overall_accuracy_ci95": 0.0171,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.344,
+      "users_accuracy_ci95": 0.0417,
+      "producers_accuracy": 0.3135,
+      "producers_accuracy_ci95": 0.0313,
+      "mapped_area_km2": 26.04,
+      "estimated_area_km2": 28.56,
+      "estimated_area_ci95_km2": 1.92,
+      "emst_census_area_km2": 28.99,
+      "ci_covers_census": true
+     },
+     "Grassland": {
+      "users_accuracy": 0.43,
+      "users_accuracy_ci95": 0.0434,
+      "producers_accuracy": 0.3499,
+      "producers_accuracy_ci95": 0.0303,
+      "mapped_area_km2": 22.61,
+      "estimated_area_km2": 27.78,
+      "estimated_area_ci95_km2": 1.85,
+      "emst_census_area_km2": 28.29,
+      "ci_covers_census": true
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.55,
+      "users_accuracy_ci95": 0.0437,
+      "producers_accuracy": 0.5932,
+      "producers_accuracy_ci95": 0.0352,
+      "mapped_area_km2": 25.21,
+      "estimated_area_km2": 23.38,
+      "estimated_area_ci95_km2": 1.6,
+      "emst_census_area_km2": 22.81,
+      "ci_covers_census": true
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.288,
+      "users_accuracy_ci95": 0.0397,
+      "producers_accuracy": 0.2502,
+      "producers_accuracy_ci95": 0.0306,
+      "mapped_area_km2": 21.29,
+      "estimated_area_km2": 24.51,
+      "estimated_area_ci95_km2": 1.82,
+      "emst_census_area_km2": 24.72,
+      "ci_covers_census": true
+     },
+     "Cropland": {
+      "users_accuracy": 0.682,
+      "users_accuracy_ci95": 0.0409,
+      "producers_accuracy": 0.6496,
+      "producers_accuracy_ci95": 0.0323,
+      "mapped_area_km2": 23.8,
+      "estimated_area_km2": 24.99,
+      "estimated_area_ci95_km2": 1.49,
+      "emst_census_area_km2": 24.44,
+      "ci_covers_census": true
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.076,
+      "users_accuracy_ci95": 0.0233,
+      "producers_accuracy": 0.3144,
+      "producers_accuracy_ci95": 0.0895,
+      "mapped_area_km2": 13.54,
+      "estimated_area_km2": 3.27,
+      "estimated_area_ci95_km2": 0.71,
+      "emst_census_area_km2": 3.25,
+      "ci_covers_census": true
+     }
+    }
+   }
+  },
+  "random_forest|S1 + S2": {
+   "census_of_test_blocks": {
+    "overall_accuracy": 0.5748,
+    "balanced_accuracy": 0.6002,
+    "macro_f1": 0.5491,
+    "kappa": 0.4799,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.439,
+      "producers_accuracy": 0.3856
+     },
+     "Grassland": {
+      "users_accuracy": 0.5439,
+      "producers_accuracy": 0.5187
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.7832,
+      "producers_accuracy": 0.8096
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.5183,
+      "producers_accuracy": 0.439
+     },
+     "Cropland": {
+      "users_accuracy": 0.7471,
+      "producers_accuracy": 0.7684
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.2123,
+      "producers_accuracy": 0.68
+     }
+    }
+   },
+   "olofsson_2014": {
+    "sample_size": 3000,
+    "sample_counts_rows_map_cols_reference": [
+     [
+      229,
+      98,
+      19,
+      136,
+      14,
+      4
+     ],
+     [
+      118,
+      266,
+      4,
+      42,
+      68,
+      2
+     ],
+     [
+      50,
+      11,
+      390,
+      45,
+      0,
+      4
+     ],
+     [
+      166,
+      38,
+      37,
+      245,
+      8,
+      6
+     ],
+     [
+      17,
+      100,
+      10,
+      4,
+      367,
+      2
+     ],
+     [
+      118,
+      73,
+      58,
+      96,
+      41,
+      114
+     ]
+    ],
+    "overall_accuracy": 0.5697,
+    "overall_accuracy_ci95": 0.0174,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.458,
+      "users_accuracy_ci95": 0.0437,
+      "producers_accuracy": 0.3805,
+      "producers_accuracy_ci95": 0.0297,
+      "mapped_area_km2": 25.46,
+      "estimated_area_km2": 30.65,
+      "estimated_area_ci95_km2": 1.92,
+      "emst_census_area_km2": 28.99,
+      "ci_covers_census": true
+     },
+     "Grassland": {
+      "users_accuracy": 0.532,
+      "users_accuracy_ci95": 0.0438,
+      "producers_accuracy": 0.5126,
+      "producers_accuracy_ci95": 0.0331,
+      "mapped_area_km2": 26.98,
+      "estimated_area_km2": 28.0,
+      "estimated_area_ci95_km2": 1.84,
+      "emst_census_area_km2": 28.29,
+      "ci_covers_census": true
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.78,
+      "users_accuracy_ci95": 0.0363,
+      "producers_accuracy": 0.8055,
+      "producers_accuracy_ci95": 0.0291,
+      "mapped_area_km2": 23.58,
+      "estimated_area_km2": 22.83,
+      "estimated_area_ci95_km2": 1.17,
+      "emst_census_area_km2": 22.81,
+      "ci_covers_census": true
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.49,
+      "users_accuracy_ci95": 0.0439,
+      "producers_accuracy": 0.4316,
+      "producers_accuracy_ci95": 0.0335,
+      "mapped_area_km2": 20.94,
+      "estimated_area_km2": 23.77,
+      "estimated_area_ci95_km2": 1.67,
+      "emst_census_area_km2": 24.72,
+      "ci_covers_census": true
+     },
+     "Cropland": {
+      "users_accuracy": 0.734,
+      "users_accuracy_ci95": 0.0388,
+      "producers_accuracy": 0.7682,
+      "producers_accuracy_ci95": 0.0319,
+      "mapped_area_km2": 25.14,
+      "estimated_area_km2": 24.02,
+      "estimated_area_ci95_km2": 1.36,
+      "emst_census_area_km2": 24.44,
+      "ci_covers_census": true
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.228,
+      "users_accuracy_ci95": 0.0368,
+      "producers_accuracy": 0.7356,
+      "producers_accuracy_ci95": 0.0953,
+      "mapped_area_km2": 10.4,
+      "estimated_area_km2": 3.22,
+      "estimated_area_ci95_km2": 0.55,
+      "emst_census_area_km2": 3.25,
+      "ci_covers_census": true
+     }
+    }
+   }
+  },
+  "hist_gradient_boosting|S1 + S2": {
+   "census_of_test_blocks": {
+    "overall_accuracy": 0.5624,
+    "balanced_accuracy": 0.5864,
+    "macro_f1": 0.5416,
+    "kappa": 0.4637,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.4207,
+      "producers_accuracy": 0.3933
+     },
+     "Grassland": {
+      "users_accuracy": 0.5218,
+      "producers_accuracy": 0.4759
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.7814,
+      "producers_accuracy": 0.7961
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.4848,
+      "producers_accuracy": 0.4482
+     },
+     "Cropland": {
+      "users_accuracy": 0.7578,
+      "producers_accuracy": 0.7479
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.2273,
+      "producers_accuracy": 0.6571
+     }
+    }
+   },
+   "olofsson_2014": {
+    "sample_size": 3000,
+    "sample_counts_rows_map_cols_reference": [
+     [
+      211,
+      119,
+      23,
+      117,
+      24,
+      6
+     ],
+     [
+      103,
+      278,
+      6,
+      32,
+      76,
+      5
+     ],
+     [
+      47,
+      7,
+      389,
+      51,
+      1,
+      5
+     ],
+     [
+      155,
+      41,
+      30,
+      256,
+      11,
+      7
+     ],
+     [
+      23,
+      93,
+      7,
+      6,
+      371,
+      0
+     ],
+     [
+      99,
+      89,
+      60,
+      108,
+      39,
+      105
+     ]
+    ],
+    "overall_accuracy": 0.5693,
+    "overall_accuracy_ci95": 0.0174,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.422,
+      "users_accuracy_ci95": 0.0433,
+      "producers_accuracy": 0.3945,
+      "producers_accuracy_ci95": 0.0322,
+      "mapped_area_km2": 27.1,
+      "estimated_area_km2": 28.99,
+      "estimated_area_ci95_km2": 1.93,
+      "emst_census_area_km2": 28.99,
+      "ci_covers_census": true
+     },
+     "Grassland": {
+      "users_accuracy": 0.556,
+      "users_accuracy_ci95": 0.0436,
+      "producers_accuracy": 0.4921,
+      "producers_accuracy_ci95": 0.0316,
+      "mapped_area_km2": 25.8,
+      "estimated_area_km2": 29.15,
+      "estimated_area_ci95_km2": 1.85,
+      "emst_census_area_km2": 28.29,
+      "ci_covers_census": true
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.778,
+      "users_accuracy_ci95": 0.0365,
+      "producers_accuracy": 0.8046,
+      "producers_accuracy_ci95": 0.0302,
+      "mapped_area_km2": 23.24,
+      "estimated_area_km2": 22.47,
+      "estimated_area_ci95_km2": 1.18,
+      "emst_census_area_km2": 22.81,
+      "ci_covers_census": true
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.512,
+      "users_accuracy_ci95": 0.0439,
+      "producers_accuracy": 0.48,
+      "producers_accuracy_ci95": 0.0344,
+      "mapped_area_km2": 22.85,
+      "estimated_area_km2": 24.38,
+      "estimated_area_ci95_km2": 1.7,
+      "emst_census_area_km2": 24.72,
+      "ci_covers_census": true
+     },
+     "Cropland": {
+      "users_accuracy": 0.742,
+      "users_accuracy_ci95": 0.0384,
+      "producers_accuracy": 0.7335,
+      "producers_accuracy_ci95": 0.0326,
+      "mapped_area_km2": 24.13,
+      "estimated_area_km2": 24.4,
+      "estimated_area_ci95_km2": 1.39,
+      "emst_census_area_km2": 24.44,
+      "ci_covers_census": true
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.21,
+      "users_accuracy_ci95": 0.0357,
+      "producers_accuracy": 0.6343,
+      "producers_accuracy_ci95": 0.1025,
+      "mapped_area_km2": 9.38,
+      "estimated_area_km2": 3.11,
+      "estimated_area_ci95_km2": 0.57,
+      "emst_census_area_km2": 3.25,
+      "ci_covers_census": true
+     }
+    }
+   }
+  },
+  "random_forest|S1 + S2 + lidar": {
+   "census_of_test_blocks": {
+    "overall_accuracy": 0.5755,
+    "balanced_accuracy": 0.6019,
+    "macro_f1": 0.5502,
+    "kappa": 0.481,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.4383,
+      "producers_accuracy": 0.3999
+     },
+     "Grassland": {
+      "users_accuracy": 0.549,
+      "producers_accuracy": 0.4973
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.7834,
+      "producers_accuracy": 0.8132
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.516,
+      "producers_accuracy": 0.4476
+     },
+     "Cropland": {
+      "users_accuracy": 0.7638,
+      "producers_accuracy": 0.7673
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.2072,
+      "producers_accuracy": 0.6863
+     }
+    }
+   },
+   "olofsson_2014": {
+    "sample_size": 3000,
+    "sample_counts_rows_map_cols_reference": [
+     [
+      224,
+      108,
+      20,
+      128,
+      18,
+      2
+     ],
+     [
+      100,
+      293,
+      9,
+      43,
+      52,
+      3
+     ],
+     [
+      53,
+      6,
+      389,
+      47,
+      0,
+      5
+     ],
+     [
+      150,
+      48,
+      34,
+      258,
+      5,
+      5
+     ],
+     [
+      11,
+      87,
+      3,
+      7,
+      391,
+      1
+     ],
+     [
+      101,
+      90,
+      76,
+      95,
+      30,
+      108
+     ]
+    ],
+    "overall_accuracy": 0.5877,
+    "overall_accuracy_ci95": 0.0171,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.448,
+      "users_accuracy_ci95": 0.0436,
+      "producers_accuracy": 0.4139,
+      "producers_accuracy_ci95": 0.0319,
+      "mapped_area_km2": 26.45,
+      "estimated_area_km2": 28.63,
+      "estimated_area_ci95_km2": 1.88,
+      "emst_census_area_km2": 28.99,
+      "ci_covers_census": true
+     },
+     "Grassland": {
+      "users_accuracy": 0.586,
+      "users_accuracy_ci95": 0.0432,
+      "producers_accuracy": 0.5128,
+      "producers_accuracy_ci95": 0.0312,
+      "mapped_area_km2": 25.62,
+      "estimated_area_km2": 29.28,
+      "estimated_area_ci95_km2": 1.82,
+      "emst_census_area_km2": 28.29,
+      "ci_covers_census": true
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.778,
+      "users_accuracy_ci95": 0.0365,
+      "producers_accuracy": 0.7947,
+      "producers_accuracy_ci95": 0.0289,
+      "mapped_area_km2": 23.67,
+      "estimated_area_km2": 23.18,
+      "estimated_area_ci95_km2": 1.19,
+      "emst_census_area_km2": 22.81,
+      "ci_covers_census": true
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.516,
+      "users_accuracy_ci95": 0.0438,
+      "producers_accuracy": 0.4488,
+      "producers_accuracy_ci95": 0.0332,
+      "mapped_area_km2": 21.44,
+      "estimated_area_km2": 24.65,
+      "estimated_area_ci95_km2": 1.7,
+      "emst_census_area_km2": 24.72,
+      "ci_covers_census": true
+     },
+     "Cropland": {
+      "users_accuracy": 0.782,
+      "users_accuracy_ci95": 0.0362,
+      "producers_accuracy": 0.811,
+      "producers_accuracy_ci95": 0.0304,
+      "mapped_area_km2": 24.56,
+      "estimated_area_km2": 23.68,
+      "estimated_area_ci95_km2": 1.24,
+      "emst_census_area_km2": 24.44,
+      "ci_covers_census": true
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.216,
+      "users_accuracy_ci95": 0.0361,
+      "producers_accuracy": 0.7534,
+      "producers_accuracy_ci95": 0.0962,
+      "mapped_area_km2": 10.75,
+      "estimated_area_km2": 3.08,
+      "estimated_area_ci95_km2": 0.54,
+      "emst_census_area_km2": 3.25,
+      "ci_covers_census": true
+     }
+    }
+   }
+  },
+  "hist_gradient_boosting|S1 + S2 + lidar": {
+   "census_of_test_blocks": {
+    "overall_accuracy": 0.5658,
+    "balanced_accuracy": 0.5912,
+    "macro_f1": 0.545,
+    "kappa": 0.468,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.4279,
+      "producers_accuracy": 0.398
+     },
+     "Grassland": {
+      "users_accuracy": 0.5222,
+      "producers_accuracy": 0.4671
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.7806,
+      "producers_accuracy": 0.8036
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.4859,
+      "producers_accuracy": 0.457
+     },
+     "Cropland": {
+      "users_accuracy": 0.7648,
+      "producers_accuracy": 0.7537
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.2303,
+      "producers_accuracy": 0.6677
+     }
+    }
+   },
+   "olofsson_2014": {
+    "sample_size": 3000,
+    "sample_counts_rows_map_cols_reference": [
+     [
+      224,
+      119,
+      24,
+      118,
+      11,
+      4
+     ],
+     [
+      106,
+      255,
+      11,
+      48,
+      75,
+      5
+     ],
+     [
+      51,
+      10,
+      393,
+      44,
+      1,
+      1
+     ],
+     [
+      159,
+      45,
+      41,
+      242,
+      9,
+      4
+     ],
+     [
+      8,
+      88,
+      1,
+      11,
+      391,
+      1
+     ],
+     [
+      108,
+      85,
+      57,
+      105,
+      26,
+      119
+     ]
+    ],
+    "overall_accuracy": 0.5719,
+    "overall_accuracy_ci95": 0.0173,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.448,
+      "users_accuracy_ci95": 0.0436,
+      "producers_accuracy": 0.4074,
+      "producers_accuracy_ci95": 0.0314,
+      "mapped_area_km2": 26.97,
+      "estimated_area_km2": 29.65,
+      "estimated_area_ci95_km2": 1.92,
+      "emst_census_area_km2": 28.99,
+      "ci_covers_census": true
+     },
+     "Grassland": {
+      "users_accuracy": 0.51,
+      "users_accuracy_ci95": 0.0439,
+      "producers_accuracy": 0.4655,
+      "producers_accuracy_ci95": 0.0328,
+      "mapped_area_km2": 25.3,
+      "estimated_area_km2": 27.72,
+      "estimated_area_ci95_km2": 1.85,
+      "emst_census_area_km2": 28.29,
+      "ci_covers_census": true
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.786,
+      "users_accuracy_ci95": 0.036,
+      "producers_accuracy": 0.7909,
+      "producers_accuracy_ci95": 0.0304,
+      "mapped_area_km2": 23.48,
+      "estimated_area_km2": 23.33,
+      "estimated_area_ci95_km2": 1.21,
+      "emst_census_area_km2": 22.81,
+      "ci_covers_census": true
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.484,
+      "users_accuracy_ci95": 0.0438,
+      "producers_accuracy": 0.4571,
+      "producers_accuracy_ci95": 0.0345,
+      "mapped_area_km2": 23.25,
+      "estimated_area_km2": 24.62,
+      "estimated_area_ci95_km2": 1.74,
+      "emst_census_area_km2": 24.72,
+      "ci_covers_census": true
+     },
+     "Cropland": {
+      "users_accuracy": 0.782,
+      "users_accuracy_ci95": 0.0362,
+      "producers_accuracy": 0.779,
+      "producers_accuracy_ci95": 0.031,
+      "mapped_area_km2": 24.09,
+      "estimated_area_km2": 24.18,
+      "estimated_area_ci95_km2": 1.28,
+      "emst_census_area_km2": 24.44,
+      "ci_covers_census": true
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.238,
+      "users_accuracy_ci95": 0.0374,
+      "producers_accuracy": 0.7491,
+      "producers_accuracy_ci95": 0.0995,
+      "mapped_area_km2": 9.41,
+      "estimated_area_km2": 2.99,
+      "estimated_area_ci95_km2": 0.52,
+      "emst_census_area_km2": 3.25,
+      "ci_covers_census": true
+     }
+    }
+   }
+  },
+  "random_forest|lidar only": {
+   "census_of_test_blocks": {
+    "overall_accuracy": 0.3485,
+    "balanced_accuracy": 0.3386,
+    "macro_f1": 0.297,
+    "kappa": 0.2116,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.3029,
+      "producers_accuracy": 0.2028
+     },
+     "Grassland": {
+      "users_accuracy": 0.2847,
+      "producers_accuracy": 0.1066
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.3636,
+      "producers_accuracy": 0.4427
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.2861,
+      "producers_accuracy": 0.262
+     },
+     "Cropland": {
+      "users_accuracy": 0.516,
+      "producers_accuracy": 0.8212
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.0483,
+      "producers_accuracy": 0.1961
+     }
+    }
+   },
+   "olofsson_2014": {
+    "sample_size": 3000,
+    "sample_counts_rows_map_cols_reference": [
+     [
+      168,
+      106,
+      99,
+      104,
+      17,
+      6
+     ],
+     [
+      127,
+      141,
+      55,
+      103,
+      59,
+      15
+     ],
+     [
+      125,
+      49,
+      193,
+      116,
+      7,
+      10
+     ],
+     [
+      141,
+      73,
+      123,
+      137,
+      15,
+      11
+     ],
+     [
+      36,
+      167,
+      10,
+      23,
+      254,
+      10
+     ],
+     [
+      144,
+      124,
+      70,
+      108,
+      35,
+      19
+     ]
+    ],
+    "overall_accuracy": 0.3524,
+    "overall_accuracy_ci95": 0.0184,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.336,
+      "users_accuracy_ci95": 0.0414,
+      "producers_accuracy": 0.2239,
+      "producers_accuracy_ci95": 0.0254,
+      "mapped_area_km2": 19.41,
+      "estimated_area_km2": 29.14,
+      "estimated_area_ci95_km2": 1.94,
+      "emst_census_area_km2": 28.99,
+      "ci_covers_census": true
+     },
+     "Grassland": {
+      "users_accuracy": 0.282,
+      "users_accuracy_ci95": 0.0395,
+      "producers_accuracy": 0.1016,
+      "producers_accuracy_ci95": 0.0147,
+      "mapped_area_km2": 10.59,
+      "estimated_area_km2": 29.39,
+      "estimated_area_ci95_km2": 2.13,
+      "emst_census_area_km2": 28.29,
+      "ci_covers_census": true
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.386,
+      "users_accuracy_ci95": 0.0427,
+      "producers_accuracy": 0.4481,
+      "producers_accuracy_ci95": 0.0365,
+      "mapped_area_km2": 27.77,
+      "estimated_area_km2": 23.92,
+      "estimated_area_ci95_km2": 1.75,
+      "emst_census_area_km2": 22.81,
+      "ci_covers_census": true
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.274,
+      "users_accuracy_ci95": 0.0391,
+      "producers_accuracy": 0.2639,
+      "producers_accuracy_ci95": 0.0328,
+      "mapped_area_km2": 22.64,
+      "estimated_area_km2": 23.5,
+      "estimated_area_ci95_km2": 1.79,
+      "emst_census_area_km2": 24.72,
+      "ci_covers_census": true
+     },
+     "Cropland": {
+      "users_accuracy": 0.508,
+      "users_accuracy_ci95": 0.0439,
+      "producers_accuracy": 0.8352,
+      "producers_accuracy_ci95": 0.0269,
+      "mapped_area_km2": 38.9,
+      "estimated_area_km2": 23.66,
+      "estimated_area_ci95_km2": 1.84,
+      "emst_census_area_km2": 24.44,
+      "ci_covers_census": true
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.038,
+      "users_accuracy_ci95": 0.0168,
+      "producers_accuracy": 0.1737,
+      "producers_accuracy_ci95": 0.0761,
+      "mapped_area_km2": 13.18,
+      "estimated_area_km2": 2.88,
+      "estimated_area_ci95_km2": 0.73,
+      "emst_census_area_km2": 3.25,
+      "ci_covers_census": true
+     }
+    }
+   }
+  },
+  "hist_gradient_boosting|lidar only": {
+   "census_of_test_blocks": {
+    "overall_accuracy": 0.3649,
+    "balanced_accuracy": 0.3535,
+    "macro_f1": 0.3079,
+    "kappa": 0.2306,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.3163,
+      "producers_accuracy": 0.1952
+     },
+     "Grassland": {
+      "users_accuracy": 0.3084,
+      "producers_accuracy": 0.1123
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.3817,
+      "producers_accuracy": 0.5511
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.2972,
+      "producers_accuracy": 0.2512
+     },
+     "Cropland": {
+      "users_accuracy": 0.5179,
+      "producers_accuracy": 0.8233
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.0524,
+      "producers_accuracy": 0.188
+     }
+    }
+   },
+   "olofsson_2014": {
+    "sample_size": 3000,
+    "sample_counts_rows_map_cols_reference": [
+     [
+      163,
+      113,
+      89,
+      97,
+      31,
+      7
+     ],
+     [
+      148,
+      163,
+      35,
+      87,
+      49,
+      18
+     ],
+     [
+      123,
+      37,
+      195,
+      129,
+      15,
+      1
+     ],
+     [
+      131,
+      79,
+      112,
+      142,
+      23,
+      13
+     ],
+     [
+      41,
+      161,
+      7,
+      17,
+      261,
+      13
+     ],
+     [
+      134,
+      115,
+      65,
+      105,
+      46,
+      35
+     ]
+    ],
+    "overall_accuracy": 0.3703,
+    "overall_accuracy_ci95": 0.019,
+    "per_class": {
+     "Mesquite shrubland": {
+      "users_accuracy": 0.326,
+      "users_accuracy_ci95": 0.0411,
+      "producers_accuracy": 0.2028,
+      "producers_accuracy_ci95": 0.0242,
+      "mapped_area_km2": 17.89,
+      "estimated_area_km2": 28.76,
+      "estimated_area_ci95_km2": 2.0,
+      "emst_census_area_km2": 28.99,
+      "ci_covers_census": true
+     },
+     "Grassland": {
+      "users_accuracy": 0.326,
+      "users_accuracy_ci95": 0.0411,
+      "producers_accuracy": 0.1185,
+      "producers_accuracy_ci95": 0.0157,
+      "mapped_area_km2": 10.3,
+      "estimated_area_km2": 28.32,
+      "estimated_area_ci95_km2": 2.09,
+      "emst_census_area_km2": 28.29,
+      "ci_covers_census": true
+     },
+     "Juniper / evergreen woody": {
+      "users_accuracy": 0.39,
+      "users_accuracy_ci95": 0.0428,
+      "producers_accuracy": 0.5468,
+      "producers_accuracy_ci95": 0.0378,
+      "mapped_area_km2": 32.92,
+      "estimated_area_km2": 23.48,
+      "estimated_area_ci95_km2": 1.81,
+      "emst_census_area_km2": 22.81,
+      "ci_covers_census": true
+     },
+     "Deciduous woody (oak, riparian)": {
+      "users_accuracy": 0.284,
+      "users_accuracy_ci95": 0.0396,
+      "producers_accuracy": 0.253,
+      "producers_accuracy_ci95": 0.0317,
+      "mapped_area_km2": 20.89,
+      "estimated_area_km2": 23.45,
+      "estimated_area_ci95_km2": 1.83,
+      "emst_census_area_km2": 24.72,
+      "ci_covers_census": true
+     },
+     "Cropland": {
+      "users_accuracy": 0.522,
+      "users_accuracy_ci95": 0.0438,
+      "producers_accuracy": 0.7979,
+      "producers_accuracy_ci95": 0.0294,
+      "mapped_area_km2": 38.86,
+      "estimated_area_km2": 25.42,
+      "estimated_area_ci95_km2": 1.9,
+      "emst_census_area_km2": 24.44,
+      "ci_covers_census": true
+     },
+     "Other (urban, water, barren)": {
+      "users_accuracy": 0.07,
+      "users_accuracy_ci95": 0.0224,
+      "producers_accuracy": 0.2665,
+      "producers_accuracy_ci95": 0.086,
+      "mapped_area_km2": 11.63,
+      "estimated_area_km2": 3.05,
+      "estimated_area_ci95_km2": 0.73,
+      "emst_census_area_km2": 3.25,
+      "ci_covers_census": true
+     }
+    }
+   }
+  }
+ },
+ "grouped_permutation_importance": {
+  "sensor_season": {
+   "model": "random_forest|S1 + S2 + lidar",
+   "baseline_balanced_accuracy": 0.6087,
+   "groups": {
+    "Sentinel-2 winter (Dec-Feb)": {
+     "mean_drop": 0.1334,
+     "sd": 0.005,
+     "features": [
+      "S2_m01_NDVI",
+      "S2_m01_NDRE",
+      "S2_m01_NDMI",
+      "S2_m02_NDVI",
+      "S2_m02_NDRE",
+      "S2_m02_NDMI",
+      "S2_m12_NDVI",
+      "S2_m12_NDRE",
+      "S2_m12_NDMI",
+      "S2_DJF_B02",
+      "S2_DJF_B03",
+      "S2_DJF_B04",
+      "S2_DJF_B05",
+      "S2_DJF_B06",
+      "S2_DJF_B07",
+      "S2_DJF_B08",
+      "S2_DJF_B8A",
+      "S2_DJF_B11",
+      "S2_DJF_B12"
+     ]
+    },
+    "Sentinel-2 spring (Mar-May)": {
+     "mean_drop": 0.024,
+     "sd": 0.0046,
+     "features": [
+      "S2_m03_NDVI",
+      "S2_m03_NDRE",
+      "S2_m03_NDMI",
+      "S2_m04_NDVI",
+      "S2_m04_NDRE",
+      "S2_m04_NDMI",
+      "S2_m05_NDVI",
+      "S2_m05_NDRE",
+      "S2_m05_NDMI",
+      "S2_MAM_B02",
+      "S2_MAM_B03",
+      "S2_MAM_B04",
+      "S2_MAM_B05",
+      "S2_MAM_B06",
+      "S2_MAM_B07",
+      "S2_MAM_B08",
+      "S2_MAM_B8A",
+      "S2_MAM_B11",
+      "S2_MAM_B12"
+     ]
+    },
+    "Sentinel-2 summer (Jun-Aug)": {
+     "mean_drop": 0.0158,
+     "sd": 0.0051,
+     "features": [
+      "S2_m06_NDVI",
+      "S2_m06_NDRE",
+      "S2_m06_NDMI",
+      "S2_m07_NDVI",
+      "S2_m07_NDRE",
+      "S2_m07_NDMI",
+      "S2_m08_NDVI",
+      "S2_m08_NDRE",
+      "S2_m08_NDMI",
+      "S2_JJA_B02",
+      "S2_JJA_B03",
+      "S2_JJA_B04",
+      "S2_JJA_B05",
+      "S2_JJA_B06",
+      "S2_JJA_B07",
+      "S2_JJA_B08",
+      "S2_JJA_B8A",
+      "S2_JJA_B11",
+      "S2_JJA_B12"
+     ]
+    },
+    "Sentinel-2 fall (Sep-Nov)": {
+     "mean_drop": 0.0323,
+     "sd": 0.0019,
+     "features": [
+      "S2_m09_NDVI",
+      "S2_m09_NDRE",
+      "S2_m09_NDMI",
+      "S2_m10_NDVI",
+      "S2_m10_NDRE",
+      "S2_m10_NDMI",
+      "S2_m11_NDVI",
+      "S2_m11_NDRE",
+      "S2_m11_NDMI",
+      "S2_SON_B02",
+      "S2_SON_B03",
+      "S2_SON_B04",
+      "S2_SON_B05",
+      "S2_SON_B06",
+      "S2_SON_B07",
+      "S2_SON_B08",
+      "S2_SON_B8A",
+      "S2_SON_B11",
+      "S2_SON_B12"
+     ]
+    },
+    "Sentinel-1 winter (Dec-Feb)": {
+     "mean_drop": 0.0047,
+     "sd": 0.0031,
+     "features": [
+      "S1_m01_VV",
+      "S1_m01_VH",
+      "S1_m01_VHVV",
+      "S1_m02_VV",
+      "S1_m02_VH",
+      "S1_m02_VHVV",
+      "S1_m12_VV",
+      "S1_m12_VH",
+      "S1_m12_VHVV"
+     ]
+    },
+    "Sentinel-1 spring (Mar-May)": {
+     "mean_drop": 0.0,
+     "sd": 0.0018,
+     "features": [
+      "S1_m03_VV",
+      "S1_m03_VH",
+      "S1_m03_VHVV",
+      "S1_m04_VV",
+      "S1_m04_VH",
+      "S1_m04_VHVV",
+      "S1_m05_VV",
+      "S1_m05_VH",
+      "S1_m05_VHVV"
+     ]
+    },
+    "Sentinel-1 summer (Jun-Aug)": {
+     "mean_drop": -0.0013,
+     "sd": 0.0023,
+     "features": [
+      "S1_m06_VV",
+      "S1_m06_VH",
+      "S1_m06_VHVV",
+      "S1_m07_VV",
+      "S1_m07_VH",
+      "S1_m07_VHVV",
+      "S1_m08_VV",
+      "S1_m08_VH",
+      "S1_m08_VHVV"
+     ]
+    },
+    "Sentinel-1 fall (Sep-Nov)": {
+     "mean_drop": -0.0004,
+     "sd": 0.0038,
+     "features": [
+      "S1_m09_VV",
+      "S1_m09_VH",
+      "S1_m09_VHVV",
+      "S1_m10_VV",
+      "S1_m10_VH",
+      "S1_m10_VHVV",
+      "S1_m11_VV",
+      "S1_m11_VH",
+      "S1_m11_VHVV"
+     ]
+    },
+    "lidar height": {
+     "mean_drop": 0.0257,
+     "sd": 0.0027,
+     "features": [
+      "LIDAR_frac1m",
+      "LIDAR_mean",
+      "LIDAR_max"
+     ]
+    }
+   }
+  },
+  "month": {
+   "model": "random_forest|S1 + S2",
+   "baseline_balanced_accuracy": 0.5945,
+   "groups": {
+    "01 Jan": {
+     "mean_drop": 0.0006,
+     "sd": 0.0027,
+     "features": [
+      "S2_m01_NDVI",
+      "S2_m01_NDRE",
+      "S2_m01_NDMI",
+      "S1_m01_VV",
+      "S1_m01_VH",
+      "S1_m01_VHVV"
+     ]
+    },
+    "02 Feb": {
+     "mean_drop": 0.0053,
+     "sd": 0.0028,
+     "features": [
+      "S2_m02_NDVI",
+      "S2_m02_NDRE",
+      "S2_m02_NDMI",
+      "S1_m02_VV",
+      "S1_m02_VH",
+      "S1_m02_VHVV"
+     ]
+    },
+    "03 Mar": {
+     "mean_drop": 0.001,
+     "sd": 0.0028,
+     "features": [
+      "S2_m03_NDVI",
+      "S2_m03_NDRE",
+      "S2_m03_NDMI",
+      "S1_m03_VV",
+      "S1_m03_VH",
+      "S1_m03_VHVV"
+     ]
+    },
+    "04 Apr": {
+     "mean_drop": 0.0013,
+     "sd": 0.0022,
+     "features": [
+      "S2_m04_NDVI",
+      "S2_m04_NDRE",
+      "S2_m04_NDMI",
+      "S1_m04_VV",
+      "S1_m04_VH",
+      "S1_m04_VHVV"
+     ]
+    },
+    "05 May": {
+     "mean_drop": -0.0026,
+     "sd": 0.003,
+     "features": [
+      "S2_m05_NDVI",
+      "S2_m05_NDRE",
+      "S2_m05_NDMI",
+      "S1_m05_VV",
+      "S1_m05_VH",
+      "S1_m05_VHVV"
+     ]
+    },
+    "06 Jun": {
+     "mean_drop": 0.001,
+     "sd": 0.0016,
+     "features": [
+      "S2_m06_NDVI",
+      "S2_m06_NDRE",
+      "S2_m06_NDMI",
+      "S1_m06_VV",
+      "S1_m06_VH",
+      "S1_m06_VHVV"
+     ]
+    },
+    "07 Jul": {
+     "mean_drop": 0.0038,
+     "sd": 0.003,
+     "features": [
+      "S2_m07_NDVI",
+      "S2_m07_NDRE",
+      "S2_m07_NDMI",
+      "S1_m07_VV",
+      "S1_m07_VH",
+      "S1_m07_VHVV"
+     ]
+    },
+    "08 Aug": {
+     "mean_drop": -0.0008,
+     "sd": 0.0016,
+     "features": [
+      "S2_m08_NDVI",
+      "S2_m08_NDRE",
+      "S2_m08_NDMI",
+      "S1_m08_VV",
+      "S1_m08_VH",
+      "S1_m08_VHVV"
+     ]
+    },
+    "09 Sep": {
+     "mean_drop": 0.0042,
+     "sd": 0.0023,
+     "features": [
+      "S2_m09_NDVI",
+      "S2_m09_NDRE",
+      "S2_m09_NDMI",
+      "S1_m09_VV",
+      "S1_m09_VH",
+      "S1_m09_VHVV"
+     ]
+    },
+    "10 Oct": {
+     "mean_drop": 0.0001,
+     "sd": 0.0018,
+     "features": [
+      "S2_m10_NDVI",
+      "S2_m10_NDRE",
+      "S2_m10_NDMI",
+      "S1_m10_VV",
+      "S1_m10_VH",
+      "S1_m10_VHVV"
+     ]
+    },
+    "11 Nov": {
+     "mean_drop": 0.0016,
+     "sd": 0.0023,
+     "features": [
+      "S2_m11_NDVI",
+      "S2_m11_NDRE",
+      "S2_m11_NDMI",
+      "S1_m11_VV",
+      "S1_m11_VH",
+      "S1_m11_VHVV"
+     ]
+    },
+    "12 Dec": {
+     "mean_drop": 0.0159,
+     "sd": 0.0033,
+     "features": [
+      "S2_m12_NDVI",
+      "S2_m12_NDRE",
+      "S2_m12_NDMI",
+      "S1_m12_VV",
+      "S1_m12_VH",
+      "S1_m12_VHVV"
+     ]
+    }
+   }
+  }
+ },
+ "phenology_medians": {
+  "NDVI": {
+   "Mesquite shrubland": [
+    0.315,
+    0.302,
+    0.382,
+    0.517,
+    0.468,
+    0.394,
+    0.455,
+    0.361,
+    0.447,
+    0.413,
+    0.337,
+    0.278
+   ],
+   "Grassland": [
+    0.262,
+    0.261,
+    0.34,
+    0.462,
+    0.406,
+    0.336,
+    0.441,
+    0.32,
+    0.416,
+    0.38,
+    0.298,
+    0.24
+   ],
+   "Juniper / evergreen woody": [
+    0.553,
+    0.456,
+    0.461,
+    0.496,
+    0.468,
+    0.454,
+    0.485,
+    0.446,
+    0.505,
+    0.494,
+    0.498,
+    0.507
+   ],
+   "Deciduous woody (oak, riparian)": [
+    0.365,
+    0.346,
+    0.421,
+    0.584,
+    0.537,
+    0.465,
+    0.495,
+    0.424,
+    0.495,
+    0.461,
+    0.382,
+    0.31
+   ],
+   "Cropland": [
+    0.27,
+    0.288,
+    0.372,
+    0.396,
+    0.31,
+    0.202,
+    0.342,
+    0.236,
+    0.28,
+    0.274,
+    0.235,
+    0.218
+   ],
+   "Other (urban, water, barren)": [
+    0.222,
+    0.223,
+    0.253,
+    0.339,
+    0.316,
+    0.281,
+    0.326,
+    0.281,
+    0.347,
+    0.333,
+    0.27,
+    0.212
+   ],
+   "Mesquite shrubland, lidar woody cover >= 30 %": [
+    0.337,
+    0.319,
+    0.396,
+    0.543,
+    0.502,
+    0.429,
+    0.47,
+    0.388,
+    0.463,
+    0.431,
+    0.358,
+    0.297
+   ],
+   "Grassland, lidar woody cover < 5 %": [
+    0.242,
+    0.245,
+    0.323,
+    0.437,
+    0.379,
+    0.31,
+    0.434,
+    0.301,
+    0.401,
+    0.369,
+    0.286,
+    0.229
+   ]
+  },
+  "NDRE": {
+   "Mesquite shrubland": [
+    0.227,
+    0.213,
+    0.252,
+    0.338,
+    0.314,
+    0.274,
+    0.321,
+    0.258,
+    0.307,
+    0.286,
+    0.225,
+    0.2
+   ],
+   "Grassland": [
+    0.189,
+    0.183,
+    0.224,
+    0.305,
+    0.272,
+    0.236,
+    0.307,
+    0.225,
+    0.284,
+    0.26,
+    0.202,
+    0.172
+   ],
+   "Juniper / evergreen woody": [
+    0.358,
+    0.302,
+    0.304,
+    0.329,
+    0.319,
+    0.311,
+    0.339,
+    0.311,
+    0.345,
+    0.34,
+    0.336,
+    0.347
+   ],
+   "Deciduous woody (oak, riparian)": [
+    0.26,
+    0.242,
+    0.277,
+    0.378,
+    0.358,
+    0.321,
+    0.349,
+    0.302,
+    0.341,
+    0.319,
+    0.249,
+    0.223
+   ],
+   "Cropland": [
+    0.193,
+    0.198,
+    0.242,
+    0.267,
+    0.219,
+    0.154,
+    0.239,
+    0.177,
+    0.196,
+    0.195,
+    0.17,
+    0.164
+   ],
+   "Other (urban, water, barren)": [
+    0.155,
+    0.154,
+    0.172,
+    0.236,
+    0.218,
+    0.197,
+    0.235,
+    0.202,
+    0.242,
+    0.231,
+    0.177,
+    0.146
+   ],
+   "Mesquite shrubland, lidar woody cover >= 30 %": [
+    0.242,
+    0.224,
+    0.261,
+    0.351,
+    0.333,
+    0.294,
+    0.33,
+    0.275,
+    0.317,
+    0.297,
+    0.234,
+    0.213
+   ],
+   "Grassland, lidar woody cover < 5 %": [
+    0.176,
+    0.173,
+    0.213,
+    0.29,
+    0.257,
+    0.22,
+    0.3,
+    0.213,
+    0.273,
+    0.252,
+    0.195,
+    0.166
+   ]
+  },
+  "NDMI": {
+   "Mesquite shrubland": [
+    -0.197,
+    -0.173,
+    -0.116,
+    -0.001,
+    -0.017,
+    -0.086,
+    -0.027,
+    -0.08,
+    -0.065,
+    -0.075,
+    -0.123,
+    -0.173
+   ],
+   "Grassland": [
+    -0.211,
+    -0.187,
+    -0.126,
+    -0.039,
+    -0.061,
+    -0.121,
+    -0.032,
+    -0.096,
+    -0.086,
+    -0.094,
+    -0.139,
+    -0.175
+   ],
+   "Juniper / evergreen woody": [
+    0.01,
+    -0.014,
+    -0.025,
+    0.017,
+    0.003,
+    -0.016,
+    0.025,
+    0.003,
+    0.042,
+    0.036,
+    0.035,
+    0.026
+   ],
+   "Deciduous woody (oak, riparian)": [
+    -0.175,
+    -0.149,
+    -0.087,
+    0.062,
+    0.049,
+    -0.029,
+    0.015,
+    -0.033,
+    -0.014,
+    -0.03,
+    -0.087,
+    -0.158
+   ],
+   "Cropland": [
+    -0.175,
+    -0.141,
+    -0.062,
+    -0.054,
+    -0.087,
+    -0.155,
+    -0.076,
+    -0.131,
+    -0.134,
+    -0.142,
+    -0.176,
+    -0.192
+   ],
+   "Other (urban, water, barren)": [
+    -0.123,
+    -0.101,
+    -0.051,
+    0.009,
+    -0.01,
+    -0.054,
+    -0.003,
+    -0.04,
+    -0.019,
+    -0.028,
+    -0.075,
+    -0.116
+   ],
+   "Mesquite shrubland, lidar woody cover >= 30 %": [
+    -0.19,
+    -0.168,
+    -0.112,
+    0.012,
+    0.001,
+    -0.068,
+    -0.017,
+    -0.067,
+    -0.053,
+    -0.062,
+    -0.109,
+    -0.164
+   ],
+   "Grassland, lidar woody cover < 5 %": [
+    -0.216,
+    -0.194,
+    -0.134,
+    -0.06,
+    -0.082,
+    -0.136,
+    -0.037,
+    -0.105,
+    -0.099,
+    -0.104,
+    -0.151,
+    -0.181
+   ]
+  },
+  "VV": {
+   "Mesquite shrubland": [
+    -11.727,
+    -11.353,
+    -10.742,
+    -11.859,
+    -11.837,
+    -11.031,
+    -11.262,
+    -11.927,
+    -11.554,
+    -12.294,
+    -12.515,
+    -12.86
+   ],
+   "Grassland": [
+    -12.989,
+    -12.505,
+    -11.609,
+    -13.138,
+    -13.122,
+    -11.824,
+    -12.145,
+    -13.05,
+    -12.349,
+    -13.353,
+    -13.889,
+    -14.537
+   ],
+   "Juniper / evergreen woody": [
+    -10.302,
+    -9.977,
+    -9.401,
+    -9.917,
+    -9.608,
+    -9.295,
+    -9.412,
+    -9.656,
+    -9.684,
+    -10.139,
+    -10.38,
+    -10.757
+   ],
+   "Deciduous woody (oak, riparian)": [
+    -10.718,
+    -10.387,
+    -9.878,
+    -10.649,
+    -10.637,
+    -10.105,
+    -10.134,
+    -10.732,
+    -10.513,
+    -11.151,
+    -11.246,
+    -11.48
+   ],
+   "Cropland": [
+    -12.132,
+    -11.75,
+    -10.918,
+    -13.147,
+    -12.743,
+    -11.107,
+    -11.351,
+    -11.903,
+    -11.44,
+    -12.384,
+    -13.239,
+    -13.905
+   ],
+   "Other (urban, water, barren)": [
+    -11.813,
+    -11.477,
+    -11.069,
+    -11.818,
+    -11.768,
+    -10.935,
+    -11.053,
+    -11.497,
+    -11.226,
+    -11.879,
+    -12.247,
+    -12.615
+   ],
+   "Mesquite shrubland, lidar woody cover >= 30 %": [
+    -11.318,
+    -10.964,
+    -10.356,
+    -11.332,
+    -11.362,
+    -10.716,
+    -10.901,
+    -11.5,
+    -11.224,
+    -11.881,
+    -12.023,
+    -12.302
+   ],
+   "Grassland, lidar woody cover < 5 %": [
+    -13.551,
+    -13.004,
+    -12.048,
+    -13.703,
+    -13.644,
+    -12.15,
+    -12.52,
+    -13.518,
+    -12.638,
+    -13.788,
+    -14.444,
+    -15.243
+   ]
+  },
+  "VH": {
+   "Mesquite shrubland": [
+    -18.937,
+    -18.397,
+    -17.43,
+    -17.952,
+    -18.129,
+    -17.55,
+    -17.445,
+    -18.021,
+    -17.777,
+    -18.474,
+    -18.839,
+    -19.547
+   ],
+   "Grassland": [
+    -21.382,
+    -20.558,
+    -19.113,
+    -19.574,
+    -19.79,
+    -18.85,
+    -18.418,
+    -19.287,
+    -18.847,
+    -19.774,
+    -20.7,
+    -21.959
+   ],
+   "Juniper / evergreen woody": [
+    -16.347,
+    -15.981,
+    -15.231,
+    -15.531,
+    -15.121,
+    -14.89,
+    -14.934,
+    -15.178,
+    -15.242,
+    -15.685,
+    -15.933,
+    -16.504
+   ],
+   "Deciduous woody (oak, riparian)": [
+    -17.291,
+    -16.847,
+    -16.111,
+    -16.569,
+    -16.711,
+    -16.323,
+    -16.143,
+    -16.632,
+    -16.505,
+    -17.104,
+    -17.327,
+    -17.824
+   ],
+   "Cropland": [
+    -21.521,
+    -20.31,
+    -18.711,
+    -19.692,
+    -20.272,
+    -19.156,
+    -18.323,
+    -18.997,
+    -19.097,
+    -19.994,
+    -21.217,
+    -22.723
+   ],
+   "Other (urban, water, barren)": [
+    -19.279,
+    -18.764,
+    -18.056,
+    -18.306,
+    -18.404,
+    -17.759,
+    -17.578,
+    -17.933,
+    -17.728,
+    -18.372,
+    -18.927,
+    -19.678
+   ],
+   "Mesquite shrubland, lidar woody cover >= 30 %": [
+    -18.105,
+    -17.655,
+    -16.829,
+    -17.34,
+    -17.54,
+    -17.05,
+    -16.95,
+    -17.502,
+    -17.296,
+    -17.933,
+    -18.169,
+    -18.743
+   ],
+   "Grassland, lidar woody cover < 5 %": [
+    -22.404,
+    -21.498,
+    -19.918,
+    -20.236,
+    -20.439,
+    -19.358,
+    -18.824,
+    -19.753,
+    -19.284,
+    -20.294,
+    -21.427,
+    -22.917
+   ]
+  },
+  "VHVV": {
+   "Mesquite shrubland": [
+    -7.201,
+    -7.072,
+    -6.708,
+    -6.08,
+    -6.272,
+    -6.541,
+    -6.134,
+    -6.077,
+    -6.222,
+    -6.141,
+    -6.284,
+    -6.656
+   ],
+   "Grassland": [
+    -8.196,
+    -7.946,
+    -7.445,
+    -6.325,
+    -6.568,
+    -7.0,
+    -6.276,
+    -6.21,
+    -6.436,
+    -6.357,
+    -6.652,
+    -7.235
+   ],
+   "Juniper / evergreen woody": [
+    -6.161,
+    -6.1,
+    -5.968,
+    -5.727,
+    -5.617,
+    -5.683,
+    -5.603,
+    -5.607,
+    -5.639,
+    -5.605,
+    -5.633,
+    -5.838
+   ],
+   "Deciduous woody (oak, riparian)": [
+    -6.676,
+    -6.565,
+    -6.289,
+    -5.955,
+    -6.095,
+    -6.275,
+    -6.024,
+    -5.928,
+    -6.036,
+    -5.978,
+    -6.089,
+    -6.391
+   ],
+   "Cropland": [
+    -9.244,
+    -8.568,
+    -7.822,
+    -6.584,
+    -7.474,
+    -8.119,
+    -6.963,
+    -7.019,
+    -7.507,
+    -7.415,
+    -7.748,
+    -8.522
+   ],
+   "Other (urban, water, barren)": [
+    -7.232,
+    -7.097,
+    -6.759,
+    -6.337,
+    -6.581,
+    -6.825,
+    -6.467,
+    -6.427,
+    -6.516,
+    -6.39,
+    -6.468,
+    -6.783
+   ],
+   "Mesquite shrubland, lidar woody cover >= 30 %": [
+    -6.842,
+    -6.756,
+    -6.488,
+    -6.025,
+    -6.132,
+    -6.337,
+    -6.051,
+    -6.002,
+    -6.079,
+    -6.057,
+    -6.141,
+    -6.429
+   ],
+   "Grassland, lidar woody cover < 5 %": [
+    -8.76,
+    -8.426,
+    -7.77,
+    -6.456,
+    -6.775,
+    -7.25,
+    -6.317,
+    -6.265,
+    -6.603,
+    -6.467,
+    -6.872,
+    -7.578
+   ]
+  }
+ },
+ "lidar_check": {
+  "by_emst_class": {
+   "Mesquite shrubland": {
+    "n_pixels": 1398787,
+    "woody_cover_quartiles": [
+     0.12,
+     0.72,
+     1.0
+    ],
+    "share_below_10pct": 0.235,
+    "share_above_25pct": 0.696
+   },
+   "Grassland": {
+    "n_pixels": 1461561,
+    "woody_cover_quartiles": [
+     0.0,
+     0.0,
+     0.56
+    ],
+    "share_below_10pct": 0.56,
+    "share_above_25pct": 0.366
+   },
+   "Juniper / evergreen woody": {
+    "n_pixels": 1027309,
+    "woody_cover_quartiles": [
+     0.88,
+     1.0,
+     1.0
+    ],
+    "share_below_10pct": 0.051,
+    "share_above_25pct": 0.925
+   },
+   "Deciduous woody (oak, riparian)": {
+    "n_pixels": 1053901,
+    "woody_cover_quartiles": [
+     0.4,
+     0.92,
+     1.0
+    ],
+    "share_below_10pct": 0.157,
+    "share_above_25pct": 0.794
+   },
+   "Cropland": {
+    "n_pixels": 1371655,
+    "woody_cover_quartiles": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "share_below_10pct": 0.883,
+    "share_above_25pct": 0.091
+   },
+   "Other (urban, water, barren)": {
+    "n_pixels": 131877,
+    "woody_cover_quartiles": [
+     0.0,
+     0.24,
+     0.8
+    ],
+    "share_below_10pct": 0.423,
+    "share_above_25pct": 0.496
+   }
+  },
+  "by_mapped_class_test_blocks": {
+   "Mesquite shrubland": {
+    "n_pixels": 254611,
+    "woody_cover_quartiles": [
+     0.2,
+     0.72,
+     1.0
+    ],
+    "share_below_10pct": 0.21,
+    "share_above_25pct": 0.715
+   },
+   "Grassland": {
+    "n_pixels": 269786,
+    "woody_cover_quartiles": [
+     0.0,
+     0.0,
+     0.44
+    ],
+    "share_below_10pct": 0.587,
+    "share_above_25pct": 0.331
+   },
+   "Juniper / evergreen woody": {
+    "n_pixels": 235762,
+    "woody_cover_quartiles": [
+     0.96,
+     1.0,
+     1.0
+    ],
+    "share_below_10pct": 0.01,
+    "share_above_25pct": 0.979
+   },
+   "Deciduous woody (oak, riparian)": {
+    "n_pixels": 209383,
+    "woody_cover_quartiles": [
+     0.8,
+     1.0,
+     1.0
+    ],
+    "share_below_10pct": 0.053,
+    "share_above_25pct": 0.915
+   },
+   "Cropland": {
+    "n_pixels": 251413,
+    "woody_cover_quartiles": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "share_below_10pct": 0.896,
+    "share_above_25pct": 0.08
+   },
+   "Other (urban, water, barren)": {
+    "n_pixels": 103961,
+    "woody_cover_quartiles": [
+     0.0,
+     0.36,
+     0.8
+    ],
+    "share_below_10pct": 0.359,
+    "share_above_25pct": 0.549
+   }
+  }
+ },
+ "core_pixel_check_main_model": {
+  "EMST mesquite, lidar woody cover >= 25 %": {
+   "n_pixels": 209071,
+   "share_of_test_class": 0.721,
+   "mapped_as": {
+    "Mesquite shrubland": 0.407,
+    "Grassland": 0.124,
+    "Juniper / evergreen woody": 0.102,
+    "Deciduous woody (oak, riparian)": 0.279,
+    "Cropland": 0.018,
+    "Other (urban, water, barren)": 0.07
+   },
+   "mapped_as_any_woody_class": 0.788
+  },
+  "EMST mesquite, lidar woody cover < 10 %": {
+   "n_pixels": 61981,
+   "share_of_test_class": 0.214,
+   "mapped_as": {
+    "Mesquite shrubland": 0.311,
+    "Grassland": 0.43,
+    "Juniper / evergreen woody": 0.008,
+    "Deciduous woody (oak, riparian)": 0.052,
+    "Cropland": 0.093,
+    "Other (urban, water, barren)": 0.106
+   },
+   "mapped_as_any_woody_class": 0.371
+  },
+  "EMST grassland, lidar woody cover < 5 %": {
+   "n_pixels": 147641,
+   "share_of_test_class": 0.522,
+   "mapped_as": {
+    "Mesquite shrubland": 0.081,
+    "Grassland": 0.599,
+    "Juniper / evergreen woody": 0.001,
+    "Deciduous woody (oak, riparian)": 0.014,
+    "Cropland": 0.259,
+    "Other (urban, water, barren)": 0.045
+   },
+   "mapped_as_any_woody_class": 0.096
+  },
+  "EMST grassland, lidar woody cover >= 25 %": {
+   "n_pixels": 108767,
+   "share_of_test_class": 0.384,
+   "mapped_as": {
+    "Mesquite shrubland": 0.338,
+    "Grassland": 0.393,
+    "Juniper / evergreen woody": 0.024,
+    "Deciduous woody (oak, riparian)": 0.131,
+    "Cropland": 0.03,
+    "Other (urban, water, barren)": 0.083
+   },
+   "mapped_as_any_woody_class": 0.494
+  },
+  "EMST cropland, lidar woody cover < 5 %": {
+   "n_pixels": 209128,
+   "share_of_test_class": 0.856,
+   "mapped_as": {
+    "Mesquite shrubland": 0.013,
+    "Grassland": 0.127,
+    "Juniper / evergreen woody": 0.0,
+    "Deciduous woody (oak, riparian)": 0.002,
+    "Cropland": 0.842,
+    "Other (urban, water, barren)": 0.016
+   },
+   "mapped_as_any_woody_class": 0.015
+  }
+ },
+ "woody_vs_lidar_check": {
+  "threshold": "lidar woody cover >= 25 % of 2 m cells taller than 1 m",
+  "map_agrees_with_lidar": 0.803,
+  "emst_agrees_with_lidar": 0.776,
+  "share_test_pixels_lidar_woody": 0.582,
+  "share_test_pixels_map_woody": 0.528,
+  "share_test_pixels_emst_woody": 0.577
+ },
+ "emst_vs_gap": {
+  "share_of_emst_mesquite_also_gap_mesquite": 0.554,
+  "share_of_gap_mesquite_also_emst_mesquite": 0.305,
+  "overall_class_agreement": 0.408,
+  "gap_mesquite_share_of_area": 0.3937,
+  "emst_mesquite_share_of_area": 0.217,
+  "rows_emst_cols_gap": {
+   "Mesquite shrubland": {
+    "Mesquite shrubland": 0.554,
+    "Grassland": 0.089,
+    "Juniper / evergreen woody": 0.0,
+    "Deciduous woody (oak, riparian)": 0.306,
+    "Cropland": 0.031,
+    "Other (urban, water, barren)": 0.02
+   },
+   "Grassland": {
+    "Mesquite shrubland": 0.422,
+    "Grassland": 0.18,
+    "Juniper / evergreen woody": 0.0,
+    "Deciduous woody (oak, riparian)": 0.191,
+    "Cropland": 0.186,
+    "Other (urban, water, barren)": 0.021
+   },
+   "Juniper / evergreen woody": {
+    "Mesquite shrubland": 0.454,
+    "Grassland": 0.029,
+    "Juniper / evergreen woody": 0.0,
+    "Deciduous woody (oak, riparian)": 0.508,
+    "Cropland": 0.005,
+    "Other (urban, water, barren)": 0.004
+   },
+   "Deciduous woody (oak, riparian)": {
+    "Mesquite shrubland": 0.499,
+    "Grassland": 0.07,
+    "Juniper / evergreen woody": 0.0,
+    "Deciduous woody (oak, riparian)": 0.399,
+    "Cropland": 0.016,
+    "Other (urban, water, barren)": 0.016
+   },
+   "Cropland": {
+    "Mesquite shrubland": 0.081,
+    "Grassland": 0.055,
+    "Juniper / evergreen woody": 0.0,
+    "Deciduous woody (oak, riparian)": 0.022,
+    "Cropland": 0.821,
+    "Other (urban, water, barren)": 0.021
+   },
+   "Other (urban, water, barren)": {
+    "Mesquite shrubland": 0.326,
+    "Grassland": 0.081,
+    "Juniper / evergreen woody": 0.0,
+    "Deciduous woody (oak, riparian)": 0.189,
+    "Cropland": 0.069,
+    "Other (urban, water, barren)": 0.336
+   }
+  }
+ },
+ "naip_items": [
+  "tx_m_3209949_ne_14_060_20201018",
+  "tx_m_3209949_se_14_060_20201018",
+  "tx_m_3209951_ne_14_060_20201007",
+  "tx_m_3209957_ne_14_060_20200825",
+  "tx_m_3209957_se_14_060_20201007",
+  "tx_m_3209958_ne_14_060_20201007",
+  "tx_m_3209958_nw_14_060_20201007",
+  "tx_m_3209958_se_14_060_20201007",
+  "tx_m_3209958_sw_14_060_20201007",
+  "tx_m_3209959_ne_14_060_20201007",
+  "tx_m_3209959_nw_14_060_20201007",
+  "tx_m_3209959_sw_14_060_20201007"
+ ]
+}

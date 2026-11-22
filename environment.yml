@@ -1,0 +1,19 @@
+name: gis-portfolio
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - numpy
+  - scipy
+  - scikit-learn>=1.4
+  - rasterio
+  - pyproj
+  - xarray
+  - requests
+  - pystac-client
+  - planetary-computer
+  - odc-stac
+  - dask
+  - matplotlib
+  - psutil
+  - pytest

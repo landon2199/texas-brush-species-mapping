@@ -1,0 +1,14 @@
+[project]
+name = "mesquite"
+version = "0.1.0"
+description = "Mapping honey mesquite shrubland in Texas rangeland with Sentinel-2 phenology, Sentinel-1 radar and lidar height, with spatially honest validation"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Landon Melesky" }]
+
+[tool.setuptools]
+packages = ["mesquite"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
