@@ -18,7 +18,7 @@ GRID = "#d0d7de"
 SCHEME = {"random_cv": ("Random 5-fold CV", "#b4b4b4", "o"),
           "spatial_cv": ("Spatial 2 km block CV", "#2f5d8a", "s"),
           "test": ("Held-out test blocks", "#16324f", "D")}
-CORE_COLOR = {"Mesquite": CLASSES[1][1], "Grassland": "#b8a800"}
+CORE_COLOR = {"Grassland": "#b8a800"}
 
 plt.rcParams.update({
     "font.family": "DejaVu Sans", "font.size": 11, "axes.edgecolor": GRID, "axes.labelcolor": INK,
@@ -71,14 +71,14 @@ def _month_axis(ax):
     ax.set_axisbelow(True)
 
 
-def hero_figure(pred, ref, classes, extent_km, ndvi, olof, cv, main, path, place, year):
+def hero_figure(pred, ref, classes, extent_km, ndvi, olof, cv, main, path, place, year, site):
     fig = plt.figure(figsize=(16, 9), dpi=100)
     gs = fig.add_gridspec(2, 3, width_ratios=[1, 1, 1.05], height_ratios=[0.13, 1], left=0.03, right=0.98,
                           top=0.97, bottom=0.13, wspace=0.14, hspace=0.12)
     head = fig.add_subplot(gs[0, :])
     head.axis("off")
-    head.text(0, 0.75, "Mapping honey mesquite with Sentinel-1 and Sentinel-2", fontsize=23, weight="bold",
-              color=INK, va="center")
+    head.text(0, 0.75, f"Mapping {site['species'].split(' (')[0]} with Sentinel-1 and Sentinel-2", fontsize=23,
+              weight="bold", color=INK, va="center")
     head.text(0, 0.05, f"{place}  |  {year}  |  10 m pixels  |  labels: TPWD EMST map",
               fontsize=13.5, color=MUTED, va="center")
     _draw_map(fig.add_subplot(gs[1, 0]), pred, classes, f"Random Forest map ({main})", extent_km, 15)
@@ -86,17 +86,18 @@ def hero_figure(pred, ref, classes, extent_km, ndvi, olof, cv, main, path, place
     ax = fig.add_subplot(gs[1, 2])
     for c in classes:
         name = CLASSES[c][0]
-        if name in ndvi and c in (1, 2, 3, 5):
+        if name in ndvi and c in site["curves"]:
             _curve(ax, ndvi[name], CLASSES[c][1], name)
     _month_axis(ax)
     ax.set_ylabel("Median NDVI (shading: middle 50 % of pixels)")
     ax.set_title("Greenness through the year", loc="left", fontsize=15)
     ax.legend(frameon=False, fontsize=9.5, loc="lower center", ncol=2)
-    k = 0  # mesquite row
-    head.text(1.0, 0.75, f"Mesquite: user's {olof['users_accuracy'][k]:.2f}, producer's {olof['producers_accuracy'][k]:.2f}",
+    k = classes.index(site["target"])
+    tname = CLASSES[site["target"]][0]
+    head.text(1.0, 0.75, f"{tname}: user's {olof['users_accuracy'][k]:.2f}, producer's {olof['producers_accuracy'][k]:.2f}",
               fontsize=16, weight="bold", color=INK, ha="right", va="center")
     ba = cv[f"random_forest|{main}"]["test"]["balanced_accuracy"]
-    head.text(1.0, 0.05, f"vs EMST labels, held-out 2 km blocks (all 6 classes: balanced accuracy {ba:.2f})",
+    head.text(1.0, 0.05, f"vs EMST labels, held-out 2 km blocks (all {len(classes)} classes: balanced accuracy {ba:.2f})",
               fontsize=12, color=MUTED, ha="right", va="center")
     fig.legend(handles=_legend_handles(classes), loc="lower left", ncol=len(classes), frameon=False,
                bbox_to_anchor=(0.03, 0.01), fontsize=11.5)
@@ -116,7 +117,7 @@ def class_curves(curves, classes, path, year):
                 _curve(ax, d[name], CLASSES[c][1], name)
         for k, q in d.items():
             if "lidar" in k:
-                col = CORE_COLOR["Mesquite"] if k.startswith("Mesquite") else CORE_COLOR["Grassland"]
+                col = CORE_COLOR["Grassland"] if k.startswith("Grassland") else CLASSES[classes[0]][1]
                 _curve(ax, q, col, k, dashed=True)
         _month_axis(ax)
         ax.set_title(title, loc="left")
@@ -270,7 +271,7 @@ def naip_chips(chips, exts, xy, titles, path, res):
         ax.imshow(_stretch(sub), extent=(-half, half, -half, half))
         ax.add_patch(Rectangle((x - cx - res / 2, y - cy - res / 2), res, res, fill=False, edgecolor="#ff3030",
                                linewidth=1.6))
-        ax.set_title(t, fontsize=8.5)
+        ax.set_title(t.replace(" | ", "\n", 1), fontsize=8.5)
     fig.suptitle("NAIP 2020 (60 cm) around held-out sample pixels; red square = the 10 m pixel; 80 m across",
                  color=MUTED, fontsize=11)
     fig.savefig(path, dpi=80, bbox_inches="tight")

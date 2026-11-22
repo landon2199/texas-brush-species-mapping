@@ -1,5 +1,7 @@
 {
  "run": {
+  "site": "mesquite",
+  "species": "honey mesquite (Prosopis glandulosa)",
   "bbox_wgs84": [
    -99.95,
    32.0,
@@ -20,9 +22,9 @@
   "buffer_m": 200.0,
   "n_train_per_class": 2000,
   "n_test_per_class": 500,
-  "runtime_seconds": 404.2,
-  "data_seconds": 27.1,
-  "peak_memory_gb_main_process": 5.24,
+  "runtime_seconds": 345.7,
+  "data_seconds": 29.0,
+  "peak_memory_gb_main_process": 5.25,
   "prepare_seconds_per_parallel_part": {
    "labels": 64.4,
    "lidar": 223.2,
@@ -1179,16 +1181,16 @@
   "n_patches": 572
  },
  "fit_seconds": {
-  "random_forest|S2 only": 10.9,
-  "hist_gradient_boosting|S2 only": 1.9,
-  "random_forest|S1 only": 17.3,
-  "hist_gradient_boosting|S1 only": 5.5,
-  "random_forest|S1 + S2": 37.4,
-  "hist_gradient_boosting|S1 + S2": 102.3,
-  "random_forest|S1 + S2 + lidar": 24.5,
-  "hist_gradient_boosting|S1 + S2 + lidar": 3.9,
-  "random_forest|lidar only": 6.7,
-  "hist_gradient_boosting|lidar only": 0.8
+  "random_forest|S2 only": 11.8,
+  "hist_gradient_boosting|S2 only": 2.5,
+  "random_forest|S1 only": 11.1,
+  "hist_gradient_boosting|S1 only": 1.8,
+  "random_forest|S1 + S2": 14.2,
+  "hist_gradient_boosting|S1 + S2": 43.6,
+  "random_forest|S1 + S2 + lidar": 14.1,
+  "hist_gradient_boosting|S1 + S2 + lidar": 4.8,
+  "random_forest|lidar only": 8.8,
+  "hist_gradient_boosting|lidar only": 1.0
  },
  "test": {
   "random_forest|S2 only": {
@@ -3902,7 +3904,7 @@
   }
  },
  "core_pixel_check_main_model": {
-  "EMST mesquite, lidar woody cover >= 25 %": {
+  "EMST Mesquite shrubland, lidar woody cover >= 25 %": {
    "n_pixels": 209071,
    "share_of_test_class": 0.721,
    "mapped_as": {
@@ -3915,7 +3917,7 @@
    },
    "mapped_as_any_woody_class": 0.788
   },
-  "EMST mesquite, lidar woody cover < 10 %": {
+  "EMST Mesquite shrubland, lidar woody cover < 10 %": {
    "n_pixels": 61981,
    "share_of_test_class": 0.214,
    "mapped_as": {
@@ -3928,7 +3930,7 @@
    },
    "mapped_as_any_woody_class": 0.371
   },
-  "EMST grassland, lidar woody cover < 5 %": {
+  "EMST Grassland, lidar woody cover < 5 %": {
    "n_pixels": 147641,
    "share_of_test_class": 0.522,
    "mapped_as": {
@@ -3941,7 +3943,7 @@
    },
    "mapped_as_any_woody_class": 0.096
   },
-  "EMST grassland, lidar woody cover >= 25 %": {
+  "EMST Grassland, lidar woody cover >= 25 %": {
    "n_pixels": 108767,
    "share_of_test_class": 0.384,
    "mapped_as": {
@@ -3953,19 +3955,6 @@
     "Other (urban, water, barren)": 0.083
    },
    "mapped_as_any_woody_class": 0.494
-  },
-  "EMST cropland, lidar woody cover < 5 %": {
-   "n_pixels": 209128,
-   "share_of_test_class": 0.856,
-   "mapped_as": {
-    "Mesquite shrubland": 0.013,
-    "Grassland": 0.127,
-    "Juniper / evergreen woody": 0.0,
-    "Deciduous woody (oak, riparian)": 0.002,
-    "Cropland": 0.842,
-    "Other (urban, water, barren)": 0.016
-   },
-   "mapped_as_any_woody_class": 0.015
   }
  },
  "woody_vs_lidar_check": {
@@ -3976,12 +3965,194 @@
   "share_test_pixels_map_woody": 0.528,
   "share_test_pixels_emst_woody": 0.577
  },
+ "emst_type_breakdown_test_blocks": {
+  "Native Invasive: Mesquite Shrubland": {
+   "label_class": "Mesquite shrubland",
+   "n_test_pixels": 276291,
+   "mapped_as": {
+    "Mesquite shrubland": 0.381,
+    "Grassland": 0.206,
+    "Juniper / evergreen woody": 0.078,
+    "Deciduous woody (oak, riparian)": 0.215,
+    "Cropland": 0.036,
+    "Other (urban, water, barren)": 0.083
+   }
+  },
+  "Row Crops": {
+   "label_class": "Cropland",
+   "n_test_pixels": 244446,
+   "mapped_as": {
+    "Mesquite shrubland": 0.039,
+    "Grassland": 0.147,
+    "Juniper / evergreen woody": 0.001,
+    "Deciduous woody (oak, riparian)": 0.016,
+    "Cropland": 0.768,
+    "Other (urban, water, barren)": 0.029
+   }
+  },
+  "Rolling Plains: Mixedgrass Prairie": {
+   "label_class": "Grassland",
+   "n_test_pixels": 170884,
+   "mapped_as": {
+    "Mesquite shrubland": 0.178,
+    "Grassland": 0.542,
+    "Juniper / evergreen woody": 0.008,
+    "Deciduous woody (oak, riparian)": 0.048,
+    "Cropland": 0.158,
+    "Other (urban, water, barren)": 0.066
+   }
+  },
+  "Edwards Plateau: Floodplain Deciduous Shrubland": {
+   "label_class": "Deciduous woody (oak, riparian)",
+   "n_test_pixels": 99200,
+   "mapped_as": {
+    "Mesquite shrubland": 0.216,
+    "Grassland": 0.061,
+    "Juniper / evergreen woody": 0.019,
+    "Deciduous woody (oak, riparian)": 0.626,
+    "Cropland": 0.029,
+    "Other (urban, water, barren)": 0.049
+   }
+  },
+  "Edwards Plateau: Ashe Juniper - Live Oak Shrubland": {
+   "label_class": "Juniper / evergreen woody",
+   "n_test_pixels": 80879,
+   "mapped_as": {
+    "Mesquite shrubland": 0.037,
+    "Grassland": 0.021,
+    "Juniper / evergreen woody": 0.829,
+    "Deciduous woody (oak, riparian)": 0.027,
+    "Cropland": 0.02,
+    "Other (urban, water, barren)": 0.066
+   }
+  },
+  "Edwards Plateau: Shin Oak Shrubland": {
+   "label_class": "Deciduous woody (oak, riparian)",
+   "n_test_pixels": 78553,
+   "mapped_as": {
+    "Mesquite shrubland": 0.476,
+    "Grassland": 0.165,
+    "Juniper / evergreen woody": 0.065,
+    "Deciduous woody (oak, riparian)": 0.146,
+    "Cropland": 0.012,
+    "Other (urban, water, barren)": 0.135
+   }
+  },
+  "Native Invasive: Juniper Shrubland": {
+   "label_class": "Juniper / evergreen woody",
+   "n_test_pixels": 51117,
+   "mapped_as": {
+    "Mesquite shrubland": 0.044,
+    "Grassland": 0.013,
+    "Juniper / evergreen woody": 0.832,
+    "Deciduous woody (oak, riparian)": 0.026,
+    "Cropland": 0.015,
+    "Other (urban, water, barren)": 0.07
+   }
+  },
+  "Southwest: Tobosa Grassland": {
+   "label_class": "Grassland",
+   "n_test_pixels": 48092,
+   "mapped_as": {
+    "Mesquite shrubland": 0.195,
+    "Grassland": 0.545,
+    "Juniper / evergreen woody": 0.011,
+    "Deciduous woody (oak, riparian)": 0.053,
+    "Cropland": 0.16,
+    "Other (urban, water, barren)": 0.036
+   }
+  },
+  "Edwards Plateau: Floodplain Herbaceous Vegetation": {
+   "label_class": "Grassland",
+   "n_test_pixels": 23510,
+   "mapped_as": {
+    "Mesquite shrubland": 0.206,
+    "Grassland": 0.321,
+    "Juniper / evergreen woody": 0.004,
+    "Deciduous woody (oak, riparian)": 0.186,
+    "Cropland": 0.211,
+    "Other (urban, water, barren)": 0.072
+   }
+  },
+  "Edwards Plateau: Ashe Juniper Motte and Woodland": {
+   "label_class": "Juniper / evergreen woody",
+   "n_test_pixels": 21408,
+   "mapped_as": {
+    "Mesquite shrubland": 0.015,
+    "Grassland": 0.009,
+    "Juniper / evergreen woody": 0.899,
+    "Deciduous woody (oak, riparian)": 0.049,
+    "Cropland": 0.006,
+    "Other (urban, water, barren)": 0.022
+   }
+  },
+  "Urban Low Intensity": {
+   "label_class": "Other (urban, water, barren)",
+   "n_test_pixels": 18051,
+   "mapped_as": {
+    "Mesquite shrubland": 0.1,
+    "Grassland": 0.095,
+    "Juniper / evergreen woody": 0.057,
+    "Deciduous woody (oak, riparian)": 0.087,
+    "Cropland": 0.033,
+    "Other (urban, water, barren)": 0.628
+   }
+  },
+  "Edwards Plateau: Deciduous Oak / Evergreen Motte and Woodland": {
+   "label_class": "Juniper / evergreen woody",
+   "n_test_pixels": 17554,
+   "mapped_as": {
+    "Mesquite shrubland": 0.024,
+    "Grassland": 0.032,
+    "Juniper / evergreen woody": 0.755,
+    "Deciduous woody (oak, riparian)": 0.09,
+    "Cropland": 0.03,
+    "Other (urban, water, barren)": 0.069
+   }
+  },
+  "Edwards Plateau: Floodplain Hardwood Forest": {
+   "label_class": "Deciduous woody (oak, riparian)",
+   "n_test_pixels": 15518,
+   "mapped_as": {
+    "Mesquite shrubland": 0.051,
+    "Grassland": 0.011,
+    "Juniper / evergreen woody": 0.04,
+    "Deciduous woody (oak, riparian)": 0.817,
+    "Cropland": 0.007,
+    "Other (urban, water, barren)": 0.074
+   }
+  },
+  "Edwards Plateau: Riparian Deciduous Shrubland": {
+   "label_class": "Deciduous woody (oak, riparian)",
+   "n_test_pixels": 14233,
+   "mapped_as": {
+    "Mesquite shrubland": 0.324,
+    "Grassland": 0.133,
+    "Juniper / evergreen woody": 0.091,
+    "Deciduous woody (oak, riparian)": 0.334,
+    "Cropland": 0.021,
+    "Other (urban, water, barren)": 0.098
+   }
+  },
+  "Crosstimbers: Savanna Grassland": {
+   "label_class": "Grassland",
+   "n_test_pixels": 14121,
+   "mapped_as": {
+    "Mesquite shrubland": 0.18,
+    "Grassland": 0.638,
+    "Juniper / evergreen woody": 0.002,
+    "Deciduous woody (oak, riparian)": 0.068,
+    "Cropland": 0.044,
+    "Other (urban, water, barren)": 0.068
+   }
+  }
+ },
  "emst_vs_gap": {
-  "share_of_emst_mesquite_also_gap_mesquite": 0.554,
-  "share_of_gap_mesquite_also_emst_mesquite": 0.305,
+  "share_of_emst_target_also_gap_target": 0.554,
+  "share_of_gap_target_also_emst_target": 0.305,
   "overall_class_agreement": 0.408,
-  "gap_mesquite_share_of_area": 0.3937,
-  "emst_mesquite_share_of_area": 0.217,
+  "gap_target_share_of_area": 0.3937,
+  "emst_target_share_of_area": 0.217,
   "rows_emst_cols_gap": {
    "Mesquite shrubland": {
     "Mesquite shrubland": 0.554,

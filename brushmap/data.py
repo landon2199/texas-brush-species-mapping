@@ -22,7 +22,7 @@ S2_BANDS = ["B02", "B03", "B04", "B05", "B06", "B07", "B08", "B8A", "B11", "B12"
 # Scene Classification Layer values kept as "clear": 2 dark area, 4 vegetation, 5 bare soil,
 # 6 water, 7 unclassified. Dropped: 0 no data, 1 saturated, 3 cloud shadow, 8/9 cloud, 10 cirrus, 11 snow.
 CLEAR_SCL = (2, 4, 5, 6, 7)
-LOAD_THREADS = int(os.environ.get("MESQUITE_LOAD_THREADS", "8")) or None
+LOAD_THREADS = int(os.environ.get("BRUSHMAP_LOAD_THREADS", "8")) or None
 HAG_MAX_M = 30.0  # heights above this are treated as noise (towers, birds, bad returns)
 
 
@@ -69,11 +69,18 @@ def catalog():
 
 # --------------------------------------------------------------------------- Sentinel-2
 def search_sentinel2(bbox, datetime: str, max_cloud: float, max_items: int):
-    """Least-cloudy Sentinel-2 L2A items in ``datetime``."""
+    """Sentinel-2 L2A items of the ``max_items`` least-cloudy acquisition dates in ``datetime``.
+
+    Dates, not single items, are ranked (by their cloudiest tile), and every tile of a chosen date
+    is returned, so a box that straddles two MGRS tiles is always covered by both.
+    """
     items = list(catalog().search(collections=["sentinel-2-l2a"], bbox=bbox, datetime=datetime,
                                   query={"eo:cloud_cover": {"lt": max_cloud}}).items())
-    items.sort(key=lambda it: it.properties["eo:cloud_cover"])
-    return items[:max_items]
+    by_date: dict = {}
+    for it in items:
+        by_date.setdefault(it.datetime.date(), []).append(it)
+    ranked = sorted(by_date, key=lambda d: (max(i.properties["eo:cloud_cover"] for i in by_date[d]), d))
+    return [it for d in ranked[:max_items] for it in sorted(by_date[d], key=lambda i: i.id)]
 
 
 def boa_offset(item) -> float:

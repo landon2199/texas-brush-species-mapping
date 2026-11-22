@@ -1,4 +1,4 @@
-"""Mapping honey mesquite shrubland in Texas rangeland with Sentinel-2, Sentinel-1 and lidar."""
+"""What can a 10 m pixel see? Mapping Texas brush species (Ashe juniper, honey mesquite) with Sentinel-1, Sentinel-2 and lidar."""
 import os as _os
 import sys as _sys
 

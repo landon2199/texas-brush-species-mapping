@@ -1,16 +1,21 @@
-# Literature review: mapping mesquite and *Prosopis* from satellites
+# Literature review: mapping Ashe juniper and mesquite (*Prosopis*) from satellites
 
 Author: Landon Melesky
 
 ## Introduction
 
-Mesquite (genus *Prosopis*) is a thorny, deep-rooted shrub or tree. In Texas, honey mesquite (*Prosopis glandulosa*) is native, but it has spread into former grassland. Texas Parks and Wildlife Department (TPWD) mapping found that "Native Invasive: Mesquite Shrubland" was the second most common mapped type in the state, at 6.1% of its area (Elliott et al., 2014). In East Africa and South Asia, *Prosopis juliflora* and its hybrids were planted for fuelwood and are now invasive.
+This project asks one question at two Texas sites: what can a 10 m satellite pixel see? Both sites use the same pipeline, so the difference in results comes from the plants and the landscape, not the method.
 
-This review asks three questions. How have others mapped *Prosopis* with satellite data? How did they check their accuracy? And what does this project copy, and what does it change?
+- **Site 1, the lead result: Ashe juniper (*Juniperus ashei*)** on the Edwards Plateau, in the Hill Country around Kerrville. Ashe juniper is an evergreen conifer that has spread into grassland and savanna. A simulation study found that without fire, Ashe juniper increases until a dense-canopy woodland forms after about 75 years (Fuhlendorf et al., 1996).
+- **Site 2, the limit result: honey mesquite (*Prosopis glandulosa*)** in the Rolling Plains. Mesquite is a thorny, deep-rooted shrub or tree. It is native to Texas, but it has spread into former grassland. Texas Parks and Wildlife Department (TPWD) mapping found that "Native Invasive: Mesquite Shrubland" was the second most common mapped type in the state, at 6.1% of its area (Elliott et al., 2014). In East Africa and South Asia, *Prosopis juliflora* and its hybrids were planted for fuelwood and are now invasive.
+
+The expected contrast is phenology, the timing of leaf-out and leaf drop. Juniper stays green all year, so in winter it stands out against dormant grass and leafless deciduous trees. Mesquite is green only part of the year, at the same time as many of its neighbours.
+
+This review asks three questions. How have others mapped juniper and *Prosopis* with satellite and aerial data? How did they check their accuracy? And what does this project copy, and what does it change?
 
 Two terms come up often. A **classifier** is the model that assigns each pixel to a class. **Random Forest** (Breiman, 2001) is a classifier built from many decision trees that vote. **Overall accuracy** is the share of check points that the map labels correctly.
 
-## How others mapped *Prosopis* and mesquite
+## How others mapped *Prosopis*, mesquite and juniper
 
 ### Africa: *Prosopis juliflora* invasion
 
@@ -29,6 +34,16 @@ Texas work started with aerial photos. In north Texas, hand-traced canopies on c
 Later studies compared image sizes. On 800 km² of north Texas rangeland, 1 m aerial images classified mesquite better than 30 m Landsat (94% vs. 87% overall accuracy). Landsat also overestimated mesquite cover (Mirik and Ansley, 2012). Across Oklahoma and Texas, a model trained on 1 m NAIP aerial images and driven by multi-season Landsat estimated percent woody cover with a mean absolute error of 12.1% (Hartfield and van Leeuwen, 2018). Closest to this project, drones were used to train a Random Forest on Sentinel-2 to map mesquite at three Texas sites (Page et al., 2022).
 
 The Rangeland Analysis Platform (RAP) now offers yearly 30 m maps of shrub and tree cover for western US rangelands. Its model was trained on 52,012 field plots and tested on 5,780 plots kept out of training (Allred et al., 2021; Jones et al., 2018). It maps cover by plant type, not by species, so it cannot tell mesquite from juniper.
+
+### Texas and Great Plains: Ashe juniper and other junipers
+
+Juniper mapping in Texas also began with aerial photos and field spectra. **Reflectance** is the share of light a surface sends back in each wavelength. In the Rolling Plains, redberry juniper (*Juniperus pinchotii*) reflected less visible light and more near-infrared light than its neighbours in February. On February color-infrared photos it showed a distinct reddish-brown tone, and the classified photo reached 100% user's and 94% producer's accuracy for juniper (Everitt et al., 2001). **User's accuracy** is the share of pixels mapped as a class that really are that class. **Producer's accuracy** is the share of the real class that the map finds.
+
+In central Texas, Ashe juniper had lower near-infrared reflectance than other woody plants and lower visible reflectance than grasses and forbs in spring and summer. It could be picked out on color-infrared photos from March to August and on a June QuickBird satellite image (about 2.4 m multispectral pixels). Unsupervised classification gave producer's and user's accuracies of 87.1% to 100% for juniper (Everitt et al., 2007). A follow-up study used airborne hyperspectral images (98 narrow bands, 475 to 845 nm) at two central Texas sites. After a noise-reducing transform, simple classifiers reached 84% to 97% overall accuracy (Yang et al., 2009). In north central Texas, color-infrared aerial images mapped redberry juniper and honey mesquite growing together, both in full leaf, with a support vector machine. Overall accuracy was 90% and 89% at two sites, and less than 7% of either species was mistaken for the other in most cases (Mirik et al., 2013). These Texas studies used aerial or very high resolution satellite images over small sites.
+
+Larger-area work on eastern redcedar (*Juniperus virginiana*) comes from the southern and central Great Plains. In central Oklahoma, a pixel- and phenology-based algorithm combined 2010 PALSAR radar (L-band, a longer wavelength than Sentinel-1) with 4,233 Landsat scenes from 1984 to 2010. It mapped redcedar forest for 2010 and five earlier periods. The four maps that were checked against Google Earth high-resolution images and field photos reached 88% to 96% overall accuracy. Redcedar grew at about 8% per year (Wang et al., 2017). The same approach, scaled up to 10,871 Landsat images, mapped eastern redcedar and Ashe juniper encroachment into prairies at 30 m and found juniper forests expanding by about 40 km² per year since 1984 (Wang et al., 2018). In central Nebraska, leaf-off lidar (flown when deciduous trees are bare) gave a conifer cover reference. Random Forest regression on Landsat 8 or Sentinel-2 then predicted conifer cover with 9.7% to 13.3% RMSE (root mean square error, the typical size of a prediction error). Seasonal composites beat both a single winter image and harmonic (smooth seasonal curve) coefficients (Filippelli et al., 2020).
+
+Two lessons stand out. First, juniper is separable in several seasons, not only in winter: in winter because it stays green while grass is dormant and deciduous woody plants are bare, and in spring and summer because its dark foliage has lower reflectance than its neighbours. Second, combining seasons works better than one date, as Filippelli et al. (2020) showed directly with Sentinel-2.
 
 ### Radar plus optical in drylands
 
@@ -51,22 +66,45 @@ Radar measures surface structure and works through clouds. Sentinel-1 is a C-ban
 | Allred et al. 2021 (RAP) | Western US rangelands | Landsat time series | Annual | Temporal | Temporal convolutional network | 52,012 field plots | MAE 6.3% | 5,780 held-out plots plus outside datasets |
 | Zhang et al. 2019 | African Sahel | Sentinel-1 plus Sentinel-2 | Not stated in abstract | Radar plus optical | Support vector machine | Google Earth very high resolution images | 93% OA (S1 89%, S2 91%) | Independent very high resolution images |
 | Borges et al. 2020 | Ngorongoro, Tanzania | Sentinel-1 plus Sentinel-2 | Dry, short-dry, wet | Radar plus optical | Not stated in abstract | Not stated in abstract | 86.3 ± 1.5% OA | Not stated in abstract |
+| Everitt et al. 2001 | Rolling Plains, northwest Texas (redberry juniper) | Color-infrared aerial photos; field spectra | February (winter) | Photo tone; visible and near-infrared reflectance | Computer classification (type not in abstract) | Not stated in abstract | Juniper UA 100%, PA 94% | Not stated in abstract |
+| Everitt et al. 2007 | Central Texas (Ashe juniper) | Color-infrared aerial photos; QuickBird; field spectra | Photos March to August; QuickBird June | Bands | Unsupervised classification | Not stated in abstract | Juniper PA and UA 87.1-100% | Not stated in abstract |
+| Yang et al. 2009 | Two central Texas sites (Ashe juniper) | Airborne hyperspectral, 98 bands, 475-845 nm | Not stated in abstract | MNF-transformed bands | Minimum distance, Mahalanobis, maximum likelihood, SAM | Not stated in abstract | 84-97% OA | Not stated in abstract |
+| Mirik et al. 2013 | Two north central Texas sites (redberry juniper and honey mesquite) | Color-infrared aerial images | Both species in full leaf | Bands | Support vector machine | Not stated in abstract | 90% and 89% OA, kappa 0.86 and 0.85 | Not stated in abstract |
+| Wang et al. 2017 | Central Oklahoma (eastern redcedar) | Landsat 5/7, 1984-2010 (4,233 scenes); PALSAR 2010 | Phenology-based (details not in abstract) | Optical time series plus L-band radar | Pixel- and phenology-based algorithm | Not stated in abstract | 88-96% OA (PA 88-93%, UA 96-99%) | Google Earth high-resolution images and geo-referenced field photos |
+| Wang et al. 2018 | Great Plains prairies (eastern redcedar and Ashe juniper) | Landsat 5/7, 1984-2010 (10,871 images); PALSAR 2010 | Phenology-based (details not in abstract) | Optical time series plus L-band radar | Pixel- and phenology-based algorithm | Not stated in abstract | Not stated in abstract | Not stated in abstract |
+| Filippelli et al. 2020 | Central Nebraska (eastern redcedar) | Leaf-off lidar; very high resolution imagery; Landsat 8; Sentinel-2 | Single winter image vs. seasonal composites vs. harmonic coefficients | Seasonal composites; harmonic coefficients | Random Forest regression (percent cover) | Conifer cover from leaf-off lidar | RMSE 9.7-13.3% (Landsat 8, Sentinel-2) | Not stated in abstract |
 
-OA = overall accuracy. OOB = out-of-bag: the trees in a Random Forest each skip part of the training data, and those skipped points act as a built-in test. MAE = mean absolute error. "Not stated in abstract" means only the abstract was checked, not the full paper.
+OA = overall accuracy. UA = user's accuracy. PA = producer's accuracy. MNF = minimum noise fraction, a transform that sorts bands by signal and drops noise. SAM = spectral angle mapper. RMSE = root mean square error. Kappa is an agreement score that discounts agreement expected by chance. OOB = out-of-bag: the trees in a Random Forest each skip part of the training data, and those skipped points act as a built-in test. MAE = mean absolute error. "Not stated in abstract" means only the abstract was checked, not the full paper.
 
 ## What the accuracies mean
 
 Most of these numbers come from check points drawn from the same pool, in the same area, as the training points. Shiferaw et al. (2019) split field plots at random, 80% for training and 20% for testing. Ng et al. (2016) used 10-fold cross-validation, which also mixes points from across the study area. Out-of-bag accuracy works the same way.
 
-Points close together look alike. So when training and test points are near neighbours, the test is easy, and accuracy can look higher than it will be in a new place. Shiferaw et al. reduced this by keeping plots at least 500 m apart. A few studies used truly separate check data: test sites from another project (Ng et al., 2017), independent high resolution images (Zhang et al., 2019), or held-out field plots (Allred et al., 2021). None of the studies reviewed here held out whole blocks of land for testing.
+Points close together look alike. So when training and test points are near neighbours, the test is easy, and accuracy can look higher than it will be in a new place. Shiferaw et al. reduced this by keeping plots at least 500 m apart. A few studies used truly separate check data: test sites from another project (Ng et al., 2017), independent high resolution images (Zhang et al., 2019), or held-out field plots (Allred et al., 2021). Wang et al. (2017) checked their redcedar maps against Google Earth images and field photos, but the abstract does not say how those samples were placed. None of the studies reviewed here held out whole blocks of land for testing.
+
+The juniper studies add a second caution. The Texas juniper accuracies (84% to 100%) come from aerial or very high resolution images over small sites, where a pixel is about the size of a tree crown or smaller. They show that juniper is spectrally distinct, but they do not show how well it can be mapped at 10 m, where one pixel can mix juniper, oak and grass. The large-area redcedar maps (Wang et al., 2017) worked at 30 m, but they mapped a "redcedar forest" class, and the abstract does not say how sparse a stand could be and still be found. Filippelli et al. (2020) avoided a class map and predicted percent cover instead, which handles mixed pixels directly.
 
 Overall accuracy also hides the rare class. When most of the map is not *Prosopis*, a map can score high while missing much of the target. Olofsson et al. (2014) set out good practice: sample by mapped class, then report user's and producer's accuracy and an area estimate with a 95% confidence interval. Few of the studies above report area this way.
 
 ## What this project follows and where it differs
 
+### Site 1: Ashe juniper
+
+The juniper site is closest to the evergreen, phenology-based approach of the Great Plains redcedar studies (Wang et al., 2017; Filippelli et al., 2020) and to the winter separation shown for redberry juniper (Everitt et al., 2001). The idea is the same: juniper stays green all year (Sullivan, 1993), so in winter it stays green against dormant grass and leafless deciduous woody plants such as mesquite. Like Filippelli et al. (2020), the project uses seasonal information from Sentinel-2 rather than one winter image, so it can also use the spring and summer contrast reported by Everitt et al. (2007).
+
+Differences from the published juniper work:
+
+- **Monthly series from two sensors.** Monthly Sentinel-2 indices and seasonal bands plus monthly Sentinel-1 VV and VH at 10 m. The Texas juniper studies used one or a few dates of aerial or very high resolution imagery. Wang et al. (2017) used L-band PALSAR from a single year; this project uses C-band Sentinel-1 every month.
+- **Mapped labels instead of field points or image interpretation.** Labels come from TPWD Ecological Mapping Systems of Texas types where juniper is the first plant named. Some of these, such as "Ashe Juniper - Live Oak Shrubland", mix in live oak, while "Oak / Ashe Juniper" mixes go to the other woody class. So the juniper class is a mapped community type, not pure juniper canopy. As at the mesquite site, the labels are older than the 2020 imagery.
+- **Spatial block validation.** Training and test data come from separate 2 km blocks, and random and spatial cross-validation are compared. None of the juniper studies above held out blocks.
+- **Area estimates.** Juniper area is reported with the Olofsson et al. (2014) estimators and 95% confidence intervals.
+- **Lidar.** USGS 3DEP lidar height is an optional structure feature. Filippelli et al. (2020) used leaf-off lidar as the reference; here lidar is an input and a check on tree height, not the label.
+
+### Site 2: honey mesquite
+
 This project follows the common recipe from the African studies, which Ng et al. (2016) and Meroni et al. (2017) show most clearly. It uses Random Forest on multi-season optical imagery and relies on a season when *Prosopis* looks different. It also takes the main lesson from Zhang et al. (2019): add Sentinel-1 radar to Sentinel-2.
 
-The key change is the phenology. African *P. juliflora* stays green in the dry season. Honey mesquite in Texas does the opposite. Its budbreak "rarely occurs prior to the last spring frost" (Goen and Dahl, 1982), and it drops its leaves in late fall (Steinberg, 2001). Ashe and redberry junipers stay green all year (Sullivan, 1993; Hauser, 2007). So in Texas the useful signal is a late spring green-up and a bare winter, set against evergreen juniper and against grasses that green up on their own schedule.
+The key change is the phenology. African *P. juliflora* stays green in the dry season. Honey mesquite in Texas does the opposite. Its budbreak "rarely occurs prior to the last spring frost" (Goen and Dahl, 1982), and it drops its leaves in late fall (Steinberg, 2001). Ashe and redberry junipers stay green all year (Sullivan, 1993; Hauser, 2007). So in Texas the useful signal is a late spring green-up and a bare winter, set against evergreen juniper and against grasses that green up on their own schedule. With color-infrared aerial images in full leaf, mesquite and redberry juniper were separated with about 90% overall accuracy (Mirik et al., 2013). This project tests whether that separation holds at 10 m.
 
 Other differences:
 
@@ -93,6 +131,14 @@ Elliott, L. F., Diamond, D. D., True, C. D., Blodgett, C. F., Pursell, D., Germa
 
 Elliott, L. F., Treuer-Kuehn, A., Blodgett, C. F., True, C. D., German, D., and Diamond, D. D. (2009-2014). *Ecological Systems of Texas: 391 Mapped Types. Phase 1-6, 10-meter resolution Geodatabase, Interpretive Guides, and Technical Type Descriptions*. Texas Parks & Wildlife Department and Texas Water Development Board, Austin, Texas. Data: https://tpwd.texas.gov/landwater/land/programs/landscape-ecology/ems/emst
 
+Everitt, J. H., Yang, C., and Johnson, H. B. (2007). Canopy spectra and remote sensing of Ashe juniper and associated vegetation. *Environmental Monitoring and Assessment*, 130(1-3), 403-413 (published online 2006). https://doi.org/10.1007/s10661-006-9407-2
+
+Everitt, J. H., Yang, C., Racher, B. J., Britton, C. M., and Davis, M. R. (2001). Remote sensing of redberry juniper in the Texas Rolling Plains. *Journal of Range Management*, 54(3), 254-259. https://doi.org/10.2307/4003243
+
+Filippelli, S. K., Vogeler, J. C., Falkowski, M. J., and Meneguzzo, D. M. (2020). Monitoring conifer cover: Leaf-off lidar and image-based tracking of eastern redcedar encroachment in central Nebraska. *Remote Sensing of Environment*, 248, 111961. https://doi.org/10.1016/j.rse.2020.111961
+
+Fuhlendorf, S. D., Smeins, F. E., and Grant, W. E. (1996). Simulation of a fire-sensitive ecological threshold: a case study of Ashe juniper on the Edwards Plateau of Texas, USA. *Ecological Modelling*, 90(3), 245-255. https://doi.org/10.1016/0304-3800(95)00151-4
+
 Gitelson, A., and Merzlyak, M. N. (1994). Spectral reflectance changes associated with autumn senescence of *Aesculus hippocastanum* L. and *Acer platanoides* L. leaves. Spectral features and relation to chlorophyll estimation. *Journal of Plant Physiology*, 143(3), 286-292. https://doi.org/10.1016/S0176-1617(11)81633-0
 
 Goen, J. P., and Dahl, B. E. (1982). Factors affecting budbreak in honey mesquite in west Texas. *Journal of Range Management*, 35(4), 533-534. https://doi.org/10.2307/3898624
@@ -110,6 +156,8 @@ Meroni, M., Ng, W.-T., Rembold, F., Leonardi, U., Atzberger, C., Gadain, H., and
 Microsoft Planetary Computer. Sentinel 1 Radiometrically Terrain Corrected (RTC) [dataset; RTC processing by Catalyst; license CC BY 4.0]. https://planetarycomputer.microsoft.com/dataset/sentinel-1-rtc
 
 Mirik, M., and Ansley, R. J. (2012). Utility of satellite and aerial images for quantification of canopy cover and infilling rates of the invasive woody species honey mesquite (*Prosopis glandulosa*) on rangeland. *Remote Sensing*, 4(7), 1947-1962. https://doi.org/10.3390/rs4071947
+
+Mirik, M., Chaudhuri, S., Surber, B., Ale, S., and Ansley, R. J. (2013). Detection of two intermixed invasive woody species using color infrared aerial imagery and the support vector machine classifier. *Journal of Applied Remote Sensing*, 7(1), 073588. https://doi.org/10.1117/1.JRS.7.073588
 
 Ng, W.-T., Meroni, M., Immitzer, M., Böck, S., Leonardi, U., Rembold, F., Gadain, H., and Atzberger, C. (2016). Mapping *Prosopis* spp. with Landsat 8 data in arid environments: Evaluating effectiveness of different methods and temporal imagery selection for Hargeisa, Somaliland. *International Journal of Applied Earth Observation and Geoinformation*, 53, 76-89. https://doi.org/10.1016/j.jag.2016.07.019
 
@@ -132,5 +180,11 @@ U.S. Geological Survey Gap Analysis Project (2016). GAP/LANDFIRE National Terres
 Vaibhav, V., Inamdar, A. B., and Bajaj, D. N. (2012). Above ground biomass and carbon stock estimation from *Prosopis juliflora* in Banni grassland using satellite and ancillary data. Asian Conference on Remote Sensing (ACRS) 2012, conference paper. https://acrs-aars.org/proceeding/ACRS2012/Proceeding%20ACRS%202012/Technical%20Sessions/E3%20Other%20(1)/E3-1.pdf
 
 Wakie, T. T., Evangelista, P. H., Jarnevich, C. S., and Laituri, M. (2014). Mapping current and potential distribution of non-native *Prosopis juliflora* in the Afar region of Ethiopia. *PLoS ONE*, 9(11), e112854. https://doi.org/10.1371/journal.pone.0112854
+
+Wang, J., Xiao, X., Qin, Y., Dong, J., Geissler, G., Zhang, G., Cejda, N., Alikhani, B., and Doughty, R. B. (2017). Mapping the dynamics of eastern redcedar encroachment into grasslands during 1984-2010 through PALSAR and time series Landsat images. *Remote Sensing of Environment*, 190, 233-246. https://doi.org/10.1016/j.rse.2016.12.025
+
+Wang, J., Xiao, X., Qin, Y., Doughty, R. B., Dong, J., and Zou, Z. (2018). Characterizing the encroachment of juniper forests into sub-humid and semi-arid prairies from 1984 to 2010 using PALSAR and Landsat data. *Remote Sensing of Environment*, 205, 166-179. https://doi.org/10.1016/j.rse.2017.11.019
+
+Yang, C., Everitt, J. H., and Johnson, H. B. (2009). Applying image transformation and classification techniques to airborne hyperspectral imagery for mapping Ashe juniper infestations. *International Journal of Remote Sensing*, 30(11), 2741-2758. https://doi.org/10.1080/01431160802555812
 
 Zhang, W., Brandt, M., Wang, Q., Prishchepov, A. V., Tucker, C. J., Li, Y., Lyu, H., and Fensholt, R. (2019). From woody cover to woody canopies: How Sentinel-1 and Sentinel-2 data advance the mapping of woody plants in savannas. *Remote Sensing of Environment*, 234, 111465. https://doi.org/10.1016/j.rse.2019.111465

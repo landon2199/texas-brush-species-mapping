@@ -2,12 +2,12 @@
 import numpy as np
 import pytest
 
-from mesquite.assess import error_matrix, feature_groups, olofsson, sample_metrics
-from mesquite.data import aggregate_height, to_db
-from mesquite.features import config_columns, fill_circular, normalized_difference, spectral_indices
-from mesquite.labels import emst_class, gap_class
-from mesquite.prepare import PARTS, feature_names, part_names
-from mesquite.train import block_ids, buffer_zone, clustered_sample, stratified_sample
+from brushmap.assess import error_matrix, feature_groups, olofsson, sample_metrics
+from brushmap.data import aggregate_height, to_db
+from brushmap.features import config_columns, fill_circular, normalized_difference, spectral_indices
+from brushmap.labels import SITES, emst_class, emst_class_juniper, gap_class, gap_class_juniper, juniper_first, set_site
+from brushmap.prepare import PARTS, feature_names, part_names
+from brushmap.train import block_ids, buffer_zone, clustered_sample, stratified_sample
 
 
 def test_normalized_difference():
@@ -174,7 +174,7 @@ def test_s1_orbit_coverage_prefers_full_footprint():
     import datetime as dt
     from types import SimpleNamespace
 
-    from mesquite.data import s1_orbit_coverage
+    from brushmap.data import s1_orbit_coverage
 
     def item(orbit, day, x0):
         return SimpleNamespace(properties={"sat:relative_orbit": orbit}, datetime=dt.datetime(2020, 1, day),
@@ -183,3 +183,47 @@ def test_s1_orbit_coverage_prefers_full_footprint():
     orbits, cover = s1_orbit_coverage(items, (0, 0, 1, 1))
     assert len(orbits[107]) == 3 and len(orbits[5]) == 2
     assert cover[5] == pytest.approx(1.0) and cover[107] == pytest.approx(0.6)
+
+
+@pytest.mark.parametrize("name, cls", [
+    ("Edwards Plateau: Ashe Juniper Motte and Woodland", 1),
+    ("Edwards Plateau: Ashe Juniper - Live Oak Shrubland", 1),  # juniper named first
+    ("Edwards Plateau: Riparian Ashe Juniper Shrubland", 1),  # 'Riparian' is a setting, not a plant
+    ("Native Invasive: Juniper Shrubland", 1),
+    ("Edwards Plateau: Oak / Ashe Juniper Slope Forest", 3),  # oak named first
+    ("Native Invasive: Deciduous - Juniper Woodland", 3),
+    ("Edwards Plateau: Live Oak Motte and Woodland", 3),
+    ("Native Invasive: Mesquite Shrubland", 3),
+    ("Edwards Plateau: Savanna Grassland", 2),
+    ("Edwards Plateau: Floodplain Herbaceous Vegetation", 2),
+    ("Row Crops", 4),
+    ("Urban Low Intensity", 4),
+])
+def test_emst_class_juniper_rules(name, cls):
+    assert emst_class_juniper(name) == cls
+
+
+def test_juniper_first_and_gap_rules():
+    assert juniper_first("Edwards Plateau: Ashe Juniper Slope Forest")
+    assert not juniper_first("Edwards Plateau: Floodplain Hardwood / Ashe Juniper Forest")
+    assert not juniper_first("Edwards Plateau: Live Oak Motte and Woodland")
+    assert gap_class_juniper("Cultivated Cropland") == 4
+    assert gap_class_juniper("Edwards Plateau Limestone Savanna and Woodland") == 3
+
+
+def test_set_site_switches_class_table():
+    from brushmap import labels
+
+    cfg = set_site("juniper")
+    assert labels.CLASSES[cfg["target"]][0] == "Ashe juniper" and len(labels.CLASSES) == 4
+    cfg = set_site("mesquite")
+    assert labels.CLASSES[cfg["target"]][0] == "Mesquite shrubland" and len(labels.CLASSES) == 6
+    for site in SITES.values():
+        assert site["target"] in site["classes"] and set(site["woody"]) <= set(site["classes"])
+
+
+def test_all_modules_import():
+    import importlib
+
+    for mod in ("assess", "data", "features", "labels", "plots", "prepare", "train"):
+        importlib.import_module(f"brushmap.{mod}")

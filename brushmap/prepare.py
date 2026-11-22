@@ -52,7 +52,7 @@ def _log(part, msg, t0):
     print(f"[{part:6s} {time.time() - t0:5.0f} s] {msg}", flush=True)
 
 
-def build_part(part: str, bbox, year: int, resolution: float, cache: Path, tag: str,
+def build_part(part: str, site: str, bbox, year: int, resolution: float, cache: Path, tag: str,
                max_cloud: float = 60.0, s2_per_month: int = 4, s1_orbit: int | None = None) -> dict:
     """Download, composite and cache one part. Returns its metadata dict."""
     t0 = time.time()
@@ -71,10 +71,11 @@ def build_part(part: str, bbox, year: int, resolution: float, cache: Path, tag: 
         # EMST (main reference) and GAP/LANDFIRE 2011 (second opinion)
         fc = labels.fetch_emst(bbox, epsg, cache / f"emst_{tag}.geojson")
         veg, veg_names = labels.rasterize_emst(fc, grid.shape, grid.transform)
-        emst_cls, emst_table = labels.to_classes(veg, veg_names, labels.emst_class)
+        rules = labels.SITES[site]
+        emst_cls, emst_table = labels.to_classes(veg, veg_names, rules["emst_rule"])
         gap_codes, gap_names, gap_items = data.load_gap(bbox, grid)
         present = {int(c): gap_names.get(int(c), "?") for c in np.unique(gap_codes) if c > 0}
-        gap_cls, gap_table = labels.to_classes(gap_codes, present, labels.gap_class)
+        gap_cls, gap_table = labels.to_classes(gap_codes, present, rules["gap_rule"])
         meta["emst"] = {"n_polygons": len(fc["features"]), "types": {
             str(k): {"name": v[0], "class": v[1], "share": round(float((veg == k).mean()), 5)}
             for k, v in sorted(emst_table.items(), key=lambda kv: -(veg == kv[0]).sum())}}

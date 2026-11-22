@@ -1,8 +1,9 @@
 """End to end: labels + Sentinel-2 + Sentinel-1 + lidar -> models -> spatial validation -> figures.
 
 Example:
-    python run.py                                   # Rolling Plains south of Abilene, Texas, 2020, 10 m
-    python run.py --bbox -99.95 32.00 -99.68 32.225 --year 2020 --seed 42
+    python run.py                     # Ashe juniper site, Hill Country around Kerrville, Texas, 2020, 10 m
+    python run.py --site mesquite     # honey mesquite site, Rolling Plains south of Abilene, Texas
+    python run.py --site juniper --bbox -99.20 29.65 -98.94 29.875 --seed 7
 """
 from __future__ import annotations
 
@@ -11,7 +12,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))  # also works with `python -I run.py`
 
-import mesquite  # noqa: F401  (sets MKL/DLL environment before numpy loads)
+import brushmap  # noqa: F401  (sets MKL/DLL environment before numpy loads)
 
 import argparse
 import json
@@ -19,7 +20,7 @@ import time
 
 import numpy as np
 
-from mesquite import assess, data, features, labels, plots, prepare, train
+from brushmap import assess, data, features, labels, plots, prepare, train
 
 ROOT = Path(__file__).resolve().parent
 CONFIGS = ["S2 only", "S1 only", "S1 + S2", "S1 + S2 + lidar", "lidar only"]
@@ -28,9 +29,11 @@ MAIN = "S1 + S2"  # the published map: satellite only, so it can run where no li
 
 def parse_args():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    p.add_argument("--bbox", nargs=4, type=float, default=[-99.95, 32.0, -99.68, 32.225],
-                   metavar=("WEST", "SOUTH", "EAST", "NORTH"), help="WGS 84 bounding box")
-    p.add_argument("--place", default="Rolling Plains south of Abilene, Texas", help="name used in figure titles")
+    p.add_argument("--site", choices=sorted(labels.SITES), default="juniper",
+                   help="study site: class rules, default box and output folder (default: juniper)")
+    p.add_argument("--bbox", nargs=4, type=float, default=None,
+                   metavar=("WEST", "SOUTH", "EAST", "NORTH"), help="WGS 84 bounding box (default: the site's box)")
+    p.add_argument("--place", default=None, help="name used in figure titles (default: the site's)")
     p.add_argument("--year", type=int, default=2020, help="image year")
     p.add_argument("--resolution", type=float, default=10.0, help="pixel size in metres")
     p.add_argument("--seed", type=int, default=42)
@@ -44,11 +47,15 @@ def parse_args():
     p.add_argument("--s2-per-month", type=int, default=4, help="least-cloudy Sentinel-2 scenes per month")
     p.add_argument("--s1-orbit", type=int, default=None, help="Sentinel-1 relative orbit (default: most frequent ascending)")
     p.add_argument("--cache", type=Path, default=ROOT / "data", help="folder for cached rasters (not in git)")
-    return p.parse_args()
+    args = p.parse_args()
+    site = labels.SITES[args.site]
+    args.bbox = args.bbox or site["bbox"]
+    args.place = args.place or site["place"]
+    return args
 
 
 def tag_of(args):
-    return f"{'_'.join(f'{v:.3f}' for v in args.bbox)}_{args.year}_{args.resolution:g}m"
+    return f"{args.site}_{'_'.join(f'{v:.3f}' for v in args.bbox)}_{args.year}_{args.resolution:g}m"
 
 
 # --------------------------------------------------------------------------- child processes
@@ -62,7 +69,7 @@ def _child(target, kwargs, status_file):
     import sys
     import traceback
 
-    import mesquite  # noqa: F401
+    import brushmap  # noqa: F401
 
     code = 0
     try:
@@ -76,29 +83,50 @@ def _child(target, kwargs, status_file):
     os._exit(code)
 
 
-def run_children(jobs: dict, cache: Path):
-    """Run several (target, kwargs) jobs in parallel spawned processes; fail if any fails."""
+def run_children(jobs: dict, cache: Path, timeout_s: float = 900.0, attempts: int = 2):
+    """Run several (target, kwargs) jobs in parallel spawned processes; fail if any fails.
+
+    A job that has not finished after ``timeout_s`` seconds is stopped and started again (up to
+    ``attempts`` tries): a network read can stall without raising an error, and on the test PC
+    one such stall held a Sentinel-2 part for more than 20 minutes.
+    """
     import multiprocessing as mp
 
     ctx = mp.get_context("spawn")
-    procs = {}
-    for name, (target, kwargs) in jobs.items():
+
+    def start(name):
+        target, kwargs = jobs[name]
         sf = cache / f"status_{name}.txt"
         sf.unlink(missing_ok=True)
         p = ctx.Process(target=_child, args=(target, kwargs, str(sf)))
         p.start()
-        procs[name] = (p, sf)
+        return p, sf, time.time()
+
+    procs = {name: start(name) for name in jobs}
+    tries = {name: 1 for name in jobs}
     failed = []
-    for name, (p, sf) in procs.items():
-        while not sf.exists() and p.is_alive():
-            time.sleep(1)
-        time.sleep(0.5)
-        status = int(sf.read_text() or 1) if sf.exists() else (p.exitcode or 1)
-        if p.is_alive():
-            p.terminate()
-        sf.unlink(missing_ok=True)
-        if status != 0:
-            failed.append(name)
+    while procs:
+        time.sleep(1)
+        for name, (p, sf, t_start) in list(procs.items()):
+            if not sf.exists() and p.is_alive():
+                if time.time() - t_start > timeout_s:
+                    p.terminate()
+                    del procs[name]
+                    if tries[name] < attempts:
+                        print(f"{name}: no result after {timeout_s:.0f} s, restarting", flush=True)
+                        tries[name] += 1
+                        procs[name] = start(name)
+                    else:
+                        failed.append(name)
+                continue
+            time.sleep(0.5)
+            status = int(sf.read_text() or 1) if sf.exists() else (p.exitcode or 1)
+            if p.is_alive():
+                p.terminate()
+            sf.unlink(missing_ok=True)
+            del procs[name]
+            if status != 0:
+                failed.append(name)
     if failed:
         raise SystemExit(f"Data step(s) failed: {failed}; see the traceback above.")
 
@@ -137,15 +165,17 @@ def main():
     threadpool_limits(8, user_api="openmp")
     t0 = time.time()
     tag = tag_of(args)
+    site = labels.set_site(args.site)
+    T, G = site["target"], site["grass"]  # class codes of the target species and of grassland
     args.cache.mkdir(parents=True, exist_ok=True)
-    figs, res_dir = ROOT / "figures", ROOT / "results"
-    figs.mkdir(exist_ok=True)
-    res_dir.mkdir(exist_ok=True)
+    figs, res_dir = ROOT / "figures" / args.site, ROOT / "results" / args.site
+    figs.mkdir(parents=True, exist_ok=True)
+    res_dir.mkdir(parents=True, exist_ok=True)
 
     todo = [p for p in prepare.PARTS if not all(x.exists() for x in prepare.part_paths(args.cache, tag, p))]
     if todo:
         print(f"Building inputs in parallel processes: {todo}")
-        kw = dict(bbox=args.bbox, year=args.year, resolution=args.resolution, cache=args.cache, tag=tag,
+        kw = dict(site=args.site, bbox=args.bbox, year=args.year, resolution=args.resolution, cache=args.cache, tag=tag,
                   max_cloud=args.max_cloud, s2_per_month=args.s2_per_month, s1_orbit=args.s1_orbit)
         run_children({p: (prepare.build_part, {"part": p, **kw}) for p in todo}, args.cache)
     stack, names, lab, lab_names, grid, meta = prepare.load_inputs(args.cache, tag)
@@ -272,9 +302,9 @@ def main():
     curves = {}
     per_class = {c: crng.choice(np.flatnonzero((valid & (emst == c)).ravel()),
                                 size=min(20000, int((valid & (emst == c)).sum())), replace=False) for c in classes}
-    # "Core" pixels: EMST mesquite where lidar sees >= 30 % woody cover, grassland where it sees < 5 %.
-    core = {"Mesquite shrubland, lidar woody cover >= 30 %": valid & (emst == 1) & (frac >= 0.3),
-            "Grassland, lidar woody cover < 5 %": valid & (emst == 2) & (frac < 0.05)}
+    # "Core" pixels: the target class where lidar sees >= 30 % woody cover, grassland where it sees < 5 %.
+    core = {f"{cname[T]}, lidar woody cover >= 30 %": valid & (emst == T) & (frac >= 0.3),
+            f"{cname[G]}, lidar woody cover < 5 %": valid & (emst == G) & (frac < 0.05)}
     core_idx = {k: crng.choice(np.flatnonzero(m.ravel()), size=min(20000, int(m.sum())), replace=False)
                 for k, m in core.items()}
     for var in ("NDVI", "NDRE", "NDMI"):
@@ -310,20 +340,19 @@ def main():
     # how does the satellite-only map do where the label is most likely right?
     f_test = frac.ravel()[test_flat]
     core_defs = {
-        "EMST mesquite, lidar woody cover >= 25 %": (ref_test == 1) & (f_test >= 0.25),
-        "EMST mesquite, lidar woody cover < 10 %": (ref_test == 1) & (f_test < 0.10),
-        "EMST grassland, lidar woody cover < 5 %": (ref_test == 2) & (f_test < 0.05),
-        "EMST grassland, lidar woody cover >= 25 %": (ref_test == 2) & (f_test >= 0.25),
-        "EMST cropland, lidar woody cover < 5 %": (ref_test == 5) & (f_test < 0.05),
+        f"EMST {cname[T]}, lidar woody cover >= 25 %": ((ref_test == T) & (f_test >= 0.25), T),
+        f"EMST {cname[T]}, lidar woody cover < 10 %": ((ref_test == T) & (f_test < 0.10), T),
+        f"EMST {cname[G]}, lidar woody cover < 5 %": ((ref_test == G) & (f_test < 0.05), G),
+        f"EMST {cname[G]}, lidar woody cover >= 25 %": ((ref_test == G) & (f_test >= 0.25), G),
     }
-    woody_classes = [c for c in (1, 3, 4) if c in classes]
+    woody_classes = [c for c in site["woody"] if c in classes]
     core_check = {}
-    for nm, m in core_defs.items():
+    for nm, (m, ref_c) in core_defs.items():
         p = test_pred[main_key][m]
         if p.size == 0:
             continue
         core_check[nm] = {"n_pixels": int(p.size),
-                          "share_of_test_class": round(float(m.sum() / max((ref_test == (1 if 'mesquite' in nm else 2 if 'grassland' in nm else 5)).sum(), 1)), 3),
+                          "share_of_test_class": round(float(m.sum() / max((ref_test == ref_c).sum(), 1)), 3),
                           "mapped_as": {cname[c]: round(float((p == c).mean()), 3) for c in classes},
                           "mapped_as_any_woody_class": round(float(np.isin(p, woody_classes).mean()), 3)}
     # Woody vs non-woody, judged by lidar alone (>= 25 % of 2 m cells taller than 1 m = woody)
@@ -339,19 +368,33 @@ def main():
         "share_test_pixels_emst_woody": round(float(emst_woody.mean()), 3),
     }
     print("Core check:", json.dumps(core_check)[:600], "| woody vs lidar:", woody_check, flush=True)
+    # How each EMST type inside the test blocks is mapped (the classes merge several types, some
+    # of them mixtures such as "Ashe Juniper - Live Oak Shrubland").
+    veg_test = lab[lab_names.index("emst_veg_id")].ravel()[test_flat]
+    type_names = {int(k): v["name"] for k, v in meta["labels"]["emst"]["types"].items()}
+    by_type = {}
+    for vid in sorted(np.unique(veg_test), key=lambda v: -(veg_test == v).sum())[:15]:
+        m = veg_test == vid
+        if m.sum() < 2000:
+            continue
+        p = test_pred[main_key][m]
+        by_type[type_names.get(int(vid), str(vid))] = {
+            "label_class": cname.get(int(np.bincount(ref_test[m]).argmax()), "excluded"),
+            "n_test_pixels": int(m.sum()),
+            "mapped_as": {cname[c]: round(float((p == c).mean()), 3) for c in classes}}
 
     # ---- EMST vs GAP agreement (both are maps; neither is ground truth)
     both = valid & (gap > 0)
     gap_vs_emst = {cname[c]: {cname[g] if g in cname else str(g): round(float(((gap == g) & both & (emst == c)).sum()
                                                                               / max(((emst == c) & both).sum(), 1)), 3)
                               for g in classes} for c in classes}
-    mesq_e, mesq_g = (emst == 1) & both, (gap == 1) & both
+    mesq_e, mesq_g = (emst == T) & both, (gap == T) & both  # target class in each map
     gap_summary = {
-        "share_of_emst_mesquite_also_gap_mesquite": round(float((mesq_e & mesq_g).sum() / max(mesq_e.sum(), 1)), 3),
-        "share_of_gap_mesquite_also_emst_mesquite": round(float((mesq_e & mesq_g).sum() / max(mesq_g.sum(), 1)), 3),
+        "share_of_emst_target_also_gap_target": round(float((mesq_e & mesq_g).sum() / max(mesq_e.sum(), 1)), 3),
+        "share_of_gap_target_also_emst_target": round(float((mesq_e & mesq_g).sum() / max(mesq_g.sum(), 1)), 3),
         "overall_class_agreement": round(float((emst[both] == gap[both]).mean()), 3),
-        "gap_mesquite_share_of_area": round(float(mesq_g.sum() / max(both.sum(), 1)), 4),
-        "emst_mesquite_share_of_area": round(float(mesq_e.sum() / max(both.sum(), 1)), 4),
+        "gap_target_share_of_area": round(float(mesq_g.sum() / max(both.sum(), 1)), 4),
+        "emst_target_share_of_area": round(float(mesq_e.sum() / max(both.sum(), 1)), 4),
         "rows_emst_cols_gap": gap_vs_emst,
     }
 
@@ -360,13 +403,14 @@ def main():
     s_idx = results[main_key]["sample_index"]
     s_map = s_pred[s_idx]
     srng = np.random.default_rng(args.seed + 3)
-    chk_m = srng.choice(s_idx[s_map == 1], size=min(12, int((s_map == 1).sum())), replace=False)
-    chk_g = srng.choice(s_idx[s_map == 2], size=min(6, int((s_map == 2).sum())), replace=False)
-    chk_j = srng.choice(s_idx[s_map == 3], size=min(6, int((s_map == 3).sum())), replace=False)
+    c1, c2, c3 = site["checks"]  # 12 pixels of the target class, 6 each of two other classes
+    chk_m = srng.choice(s_idx[s_map == c1], size=min(12, int((s_map == c1).sum())), replace=False)
+    chk_g = srng.choice(s_idx[s_map == c2], size=min(6, int((s_map == c2).sum())), replace=False)
+    chk_j = srng.choice(s_idx[s_map == c3], size=min(6, int((s_map == c3).sum())), replace=False)
     chk = np.concatenate([chk_m, chk_g, chk_j])
     chk_xy = train.pixel_coords(chk, grid.shape, grid.transform)
     # Inset: the 300 m window (in the test blocks) with the widest spread of lidar woody cover
-    # among EMST-mesquite pixels.
+    # among pixels of the target class.
     win = 30
     best, best_score = None, -1
     for b in np.unique(blocks[test_mask])[:60]:
@@ -375,7 +419,7 @@ def main():
         w_e, w_f = emst[r0:r0 + win, c0:c0 + win], frac[r0:r0 + win, c0:c0 + win]
         if w_e.shape != (win, win) or not np.isfinite(w_f).all():
             continue
-        score = (w_e == 1).mean() * np.std(w_f)
+        score = (w_e == T).mean() * np.std(w_f)
         if score > best_score:
             best, best_score = (r0, c0), score
     r0, c0 = best
@@ -397,7 +441,7 @@ def main():
     pred_show = np.where(valid, pred_map, 0)
     main_res = results[main_key]
     plots.hero_figure(pred_show, ref_show, classes, extent, curves["NDVI"], main_res["olofsson"], cv, MAIN,
-                      figs / "hero.png", args.place, args.year)
+                      figs / "hero.png", args.place, args.year, site)
     plots.class_curves(curves, classes, figs / "class_curves.png", args.year)
     plots.model_comparison(cv, CONFIGS, figs / "model_comparison.png", cv_clustered, args.cluster_px, MAIN)
     plots.confusion_figure(main_res["counts"], classes, main_res["olofsson"]["users_accuracy"],
@@ -408,7 +452,8 @@ def main():
     win_sl = (slice(r0, r0 + win), slice(c0, c0 + win))
     plots.naip_inset(naip_chips[0], naip_ext[0], emst[win_sl], pred_map[win_sl], frac[win_sl],
                      stack[names.index("LIDAR_max")][win_sl], classes, figs / "naip_inset.png", naip_ids[0])
-    chk_labels = [f"map {cname[int(s_pred[i])].split(' ')[0].split('/')[0]} | EMST {cname[int(y_all[i])].split(' ')[0]}"
+    short = {c: cname[c].split(" (")[0].split(" /")[0] for c in classes}
+    chk_labels = [f"map {short[int(s_pred[i])]} | EMST {short[int(y_all[i])]}"
                   f" | lidar {100 * frac.ravel()[i]:.0f}%" for i in chk]
     plots.naip_chips(naip_chips[1:], naip_ext[1:], chk_xy, chk_labels, figs / "naip_spot_checks.png",
                      args.resolution)
@@ -424,7 +469,7 @@ def main():
 
     class_names = [cname[c] for c in classes]
     out = {
-        "run": {"bbox_wgs84": args.bbox, "place": args.place, "year": args.year, "resolution_m": args.resolution,
+        "run": {"site": args.site, "species": site["species"], "bbox_wgs84": args.bbox, "place": args.place, "year": args.year, "resolution_m": args.resolution,
                 "seed": args.seed, "crs": grid.crs, "grid_shape": list(grid.shape), "block_km": args.block_km,
                 "test_fraction_of_blocks": args.test_fraction, "buffer_m": args.buffer_m,
                 "n_train_per_class": args.n_train, "n_test_per_class": args.n_test,
@@ -457,6 +502,7 @@ def main():
         "lidar_check": lidar_check,
         "core_pixel_check_main_model": core_check,
         "woody_vs_lidar_check": woody_check,
+        "emst_type_breakdown_test_blocks": by_type,
         "emst_vs_gap": gap_summary,
         "naip_items": sorted(set(naip_ids)),
     }
@@ -484,7 +530,7 @@ def main():
     out["run"]["peak_memory_gb_main_process"] = peak_memory_gb()
     (res_dir / "metrics.json").write_text(json.dumps(out, indent=1))
     print(f"Done in {time.time() - t0:.0f} s (peak memory {peak_memory_gb()} GB). "
-          "Metrics: results/metrics.json, figures: figures/")
+          f"Metrics: results/{args.site}/metrics.json, figures: figures/{args.site}/")
 
 
 if __name__ == "__main__":
