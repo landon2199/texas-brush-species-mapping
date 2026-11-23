@@ -19,21 +19,22 @@ EMST_SERVICE = (
 )
 EMST_LAYERS = tuple(range(1, 12))  # one layer per ecoregion; only those that intersect the box return data
 
-# Analysis classes per study site: code -> (name, color). ``CLASSES`` holds the active site's table
+# Analysis classes per study site: code -> (name, color). Colors checked with a colorblind-safety
+# validator: every pair of classes stays distinct under protan, deutan and tritan vision. ``CLASSES`` holds the active site's table
 # (set by :func:`set_site`); the figures read it.
 MESQUITE_CLASSES = {
-    1: ("Mesquite shrubland", "#c8a03c"),
+    1: ("Mesquite shrubland", "#eb6834"),
     2: ("Grassland", "#e8e07a"),
     3: ("Juniper / evergreen woody", "#1f5f3a"),
-    4: ("Deciduous woody (oak, riparian)", "#6fa35a"),
-    5: ("Cropland", "#d77fb3"),
-    6: ("Other (urban, water, barren)", "#8a8a8a"),
+    4: ("Deciduous woody (oak, riparian)", "#3d9e8c"),
+    5: ("Cropland", "#a8458f"),
+    6: ("Other (urban, water, barren)", "#b0b0b0"),
 }
 JUNIPER_CLASSES = {
     1: ("Ashe juniper", "#1f5f3a"),
     2: ("Grassland", "#e8e07a"),
-    3: ("Other woody (oak, mesquite, riparian)", "#8fbf5a"),
-    4: ("Cropland / other (urban, water, barren)", "#b57aa0"),
+    3: ("Other woody (oak, mesquite, riparian)", "#3d9e8c"),
+    4: ("Cropland / other (urban, water, barren)", "#a8458f"),
 }
 CLASSES = dict(MESQUITE_CLASSES)
 MESQUITE = 1

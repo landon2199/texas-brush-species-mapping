@@ -55,10 +55,10 @@ def _draw_map(ax, img, classes, title, extent_km, fontsize=13):
         s.set_color(GRID)
 
 
-def _curve(ax, q, color, label, dashed=False):
+def _curve(ax, q, color, label, dashed=False, band=True):
     x = np.arange(1, 13)
     q = np.asarray(q)
-    if not dashed:
+    if band and not dashed:
         ax.fill_between(x, q[0], q[2], color=color, alpha=0.15, linewidth=0)
     ax.plot(x, q[1], color=color, linewidth=2.4 if not dashed else 2.0, linestyle="--" if dashed else "-",
             marker="o", markersize=4, label=label)
@@ -72,12 +72,12 @@ def _month_axis(ax):
 
 
 def hero_figure(pred, ref, classes, extent_km, ndvi, olof, cv, main, path, place, year, site):
-    fig = plt.figure(figsize=(16, 9), dpi=100)
-    gs = fig.add_gridspec(2, 3, width_ratios=[1, 1, 1.05], height_ratios=[0.13, 1], left=0.03, right=0.98,
-                          top=0.97, bottom=0.13, wspace=0.14, hspace=0.12)
+    fig = plt.figure(figsize=(16, 7.4), dpi=100)
+    gs = fig.add_gridspec(2, 3, width_ratios=[1, 1, 1.05], height_ratios=[0.16, 1], left=0.03, right=0.98,
+                          top=0.96, bottom=0.12, wspace=0.16, hspace=0.2)
     head = fig.add_subplot(gs[0, :])
     head.axis("off")
-    head.text(0, 0.75, f"Mapping {site['species'].split(' (')[0]} with Sentinel-1 and Sentinel-2", fontsize=23,
+    head.text(0, 0.75, f"Mapping {site['species'].split(' (')[0]} with Sentinel-1 and Sentinel-2", fontsize=20,
               weight="bold", color=INK, va="center")
     head.text(0, 0.05, f"{place}  |  {year}  |  10 m pixels  |  labels: TPWD EMST map",
               fontsize=13.5, color=MUTED, va="center")
@@ -87,15 +87,14 @@ def hero_figure(pred, ref, classes, extent_km, ndvi, olof, cv, main, path, place
     for c in classes:
         name = CLASSES[c][0]
         if name in ndvi and c in site["curves"]:
-            _curve(ax, ndvi[name], CLASSES[c][1], name)
+            _curve(ax, ndvi[name], CLASSES[c][1], name, band=(c == site["target"]))
     _month_axis(ax)
-    ax.set_ylabel("Median NDVI (shading: middle 50 % of pixels)")
+    ax.set_ylabel("Median NDVI (shading: middle 50 % of target pixels)")
     ax.set_title("Greenness through the year", loc="left", fontsize=15)
-    ax.legend(frameon=False, fontsize=9.5, loc="lower center", ncol=2)
     k = classes.index(site["target"])
     tname = CLASSES[site["target"]][0]
     head.text(1.0, 0.75, f"{tname}: user's {olof['users_accuracy'][k]:.2f}, producer's {olof['producers_accuracy'][k]:.2f}",
-              fontsize=16, weight="bold", color=INK, ha="right", va="center")
+              fontsize=14.5, weight="bold", color=INK, ha="right", va="center")
     ba = cv[f"random_forest|{main}"]["test"]["balanced_accuracy"]
     head.text(1.0, 0.05, f"vs EMST labels, held-out 2 km blocks (all {len(classes)} classes: balanced accuracy {ba:.2f})",
               fontsize=12, color=MUTED, ha="right", va="center")
@@ -149,7 +148,8 @@ def model_comparison(cv, configs, path, clustered, cluster_px, main, metric="bal
     ax.set_yticks(range(len(rows)), [f"{cfg} | {ml}" for cfg, _, ml in rows], fontsize=9.5)
     ax.set_ylim(len(rows) - 0.5, -0.6)
     lo = min(cv[f"{m}|{c}"][s][metric] for c, m, _ in rows for s in off if s in cv[f"{m}|{c}"])
-    ax.set_xlim(max(0, lo - 0.08), 1.0)
+    hi = max(cv[f"{m}|{c}"][s][metric] for c, m, _ in rows for s in off if s in cv[f"{m}|{c}"])
+    ax.set_xlim(max(0, lo - 0.05), min(1.0, hi + 0.06))
     ax.set_xlabel("Balanced accuracy vs EMST labels (axis zoomed)")
     ax.set_title("Which sensors help? (scattered-pixel training sample)", loc="left")
     ax.xaxis.grid(True, color=GRID, linewidth=0.6)
